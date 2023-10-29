@@ -1,0 +1,13 @@
+.main{
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100vh;
+}
+h1{
+  color: #160B34;
+  font-size: 40px;
+}

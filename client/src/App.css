@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400;500;600;700&display=swap');
+
+body{
+    margin: 0;
+    background: linear-gradient(to right, #b3f6c7 22%, #6ec388 51%, #25bf53 86%);
+    position: relative;
+    overflow: hidden;
+}
+*{
+    font-family: 'AR One Sans', sans-serif;
+}
+::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+}
