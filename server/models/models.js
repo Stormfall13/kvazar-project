@@ -22,22 +22,18 @@ const Dop = sequelize.define('dop_work_table', {
     point: {type: DataTypes.INTEGER},                               // Баллы
     inspector: {type: DataTypes.STRING},                            // Проверяющий
     departament: {type: DataTypes.STRING},                          // Отдел
-    typeCheck: {type: DataTypes.STRING},                            // Тип проверки
     delayTester: {type: DataTypes.STRING},                          // Просрочка тестировщика
     delayExecutor: {type: DataTypes.STRING},                        // Просрочка исполнителя
-    pointsRemove: {type: DataTypes.INTEGER},                        // Снятые баллы
+    pointsRemove: {type: DataTypes.INTEGER, defaultValue: 0},       // Снятые баллы
     dispute: {type: DataTypes.INTEGER, defaultValue: 0},            // Спор
     commentError: {type: DataTypes.STRING},                         // Комментарий ошибки
-    dataNum: {type: DataTypes.DATE},                                // Дата в числах
-    linkReport: {type: DataTypes.STRING},                           // ссылка для отчета
-    reportMonth: {type: DataTypes.DATE},                            // Отчет ежемесячный
+    linkReport: {type: DataTypes.STRING}                            // ссылка для отчета
 })
 
 const Executor = sequelize.define('executor_table', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}, // ID
     executorName: {type: DataTypes.STRING},                               // Имя и фамилия исполнителя
-    executorTypeWork: {type: DataTypes.STRING},                           // Вид работ ( ОДР / ВДР )
-    executorDepartament: {type: DataTypes.STRING}                         // Департамент
+    executorDepartament: {type: DataTypes.STRING}                         // Отдел
 })
 
 

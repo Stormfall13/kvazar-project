@@ -6,7 +6,7 @@ const AdWork = () => {
     const [reglament, setReglament] = useState('');
     const [executor, setExecutor] = useState('');
     const [amount, setAmount] = useState('');
-    // const [typeWork, setTypeWork] = useState('');
+    const [typeWork, setTypeWork] = useState('');
     const [typeTest, setTypeTest] = useState('');
     const [recommen, setRecommen] = useState('');
     const [err, setErr] = useState('');
@@ -16,8 +16,7 @@ const AdWork = () => {
     const [deadlines, setDeadlines] = useState('');
     const [point, setPoint] = useState('');
     const [inspector, setInspector] = useState('');
-    // const [departament, setDepartament] = useState('');
-    const [typeCheck, setTypeCheck] = useState('');
+    const [departament, setDepartament] = useState('');
     const [delayTester, setDelayTester] = useState('');
     const [delayExecutor, setDelayExecutor] = useState('');
     const [pointsRemove, setPointsRemove] = useState('');
@@ -26,11 +25,53 @@ const AdWork = () => {
     const [dataNum, setDataNum] = useState('');
     const [linkReport, setLinkReport] = useState('');
     const [reportMonth, setReportMonth] = useState('');
-    
-    
+
     const [executors, setExecutors] = useState([]);
-    
+
     useEffect(() => {
+        if(amount === '1-2'){
+            setPoint('4')
+        }
+        else if(amount === '3-5'){
+            setPoint('16')
+        }
+        else if(amount === '6 и более'){
+            setPoint('8')
+        }
+    }, [amount]);
+
+    useEffect(() => {
+        if(typeTest === 'Итерация'){
+            setIteration("1")
+        }
+    }, [typeTest])
+
+    const item = {
+        "reglament": reglament,
+        "executor": executor,
+        "amount": amount,
+        "typeWork": typeWork,
+        "typeTest": typeTest,
+        "recommen": recommen,
+        "err": err,
+        "critic": critic,
+        "counting": counting,
+        "iteration": iteration,
+        "deadlines": deadlines,
+        "point": point,
+        "inspector": inspector,
+        "departament": departament,
+        "delayTester": delayTester,
+        "delayExecutor": delayExecutor,
+        "pointsRemove": pointsRemove,
+        "dispute": dispute,
+        "commentError": commentError,
+        // "linkReport": linkReport,
+    }
+
+    // console.log(departament);
+
+    function handleChange(event) {
         fetch('http://localhost:5000/api/executor', {
             method: "GET",
             headers: {
@@ -39,46 +80,25 @@ const AdWork = () => {
         })
         .then(res => res.json())
         .then(response => {
-            setTimeout(() => {
-                setExecutors(response)
+            response.map(executorElem => {
+                if(event.target.value == executorElem.executorName){
+                    setDepartament(executorElem.executorDepartament)
+                }
             })
+            setExecutors(response)
+
         })
-    }, [])
-    
-    // console.log(executors);
+        setExecutor(event.target.value);
+        // console.log(event.target.value);
+    }
+
+
+    console.log(executors);
+    console.log(executor);
     
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        const item = {
-            "reglament": reglament,
-            "executor": executor,
-            "amount": amount,
-            "typeWork": "",
-            "typeTest": typeTest,
-            "recommen": recommen,
-            "err": err,
-            "critic": critic,
-            "counting": counting,
-            // "iteration": iteration,
-            "deadlines": deadlines,
-            // "point": point,
-            "inspector": inspector,
-            "departament": "",
-            "typeCheck": typeCheck,
-            "delayTester": delayTester,
-            "delayExecutor": delayExecutor,
-            // "pointsRemove": pointsRemove,
-            // "dispute": dispute,
-            // "commentError": commentError,
-            // "linkReport": linkReport,
-        }
-        
-        // if(item.executor == "Пяк Александр"){
-        //     item.departament = 'ВДР';
-        // }
-        
         
         
         // Отправка данных на сервер
@@ -114,7 +134,6 @@ const AdWork = () => {
         // setPoint('');
         // setInspector('');
         // setDepartament('');
-        // setTypeCheck('');
         // setDelayTester('');
         // setDelayExecutor('');
         // setPointsRemove('');
@@ -123,16 +142,9 @@ const AdWork = () => {
         // setDataNum('');
         // setLinkReport('');
         // setReportMonth('');
+
     };
 
-    {executors.map(executorElem => {
-        // if(item.executor == executorElem.executorName){
-        //     departament = 'Верстка';
-        //     typeWork = 'ВДР';
-        // }
-        console.log(item);
-        // console.log(executorElem);
-    })}
 
 
     return (
@@ -147,24 +159,17 @@ const AdWork = () => {
                     <option value="Дильгер Э"></option>
                     <option value="Хакимов Ш"></option>
                 </datalist>
-                {/* <div className="wrapp__checkbox">
-                    <span className="options__work">Тип проверки</span>
-                    <input type="text" list='ТипПроверки' value={typeWork} onChange={(e) => setTypeWork(e.target.value)}/>
-                    <datalist id='ТипПроверки'>
-                        <option value="ОДР"></option>
-                        <option value="ВДР"></option>
-                    </datalist>
-                </div> */}
-                <input value={executor} onChange={(e) => setExecutor(e.target.value)} className="main__input" type="text" list='Исполнители' placeholder='Исполнители'/>
+                <input value={executor} onChange={handleChange} className="main__input" type="text" list='Исполнители' placeholder='Исполнители'/>
                 <datalist id='Исполнители'>
                     <option value="Пяк Александр"></option>
                     <option value="Ким Константин"></option>
                     <option value="Бодров Александр"></option>
                     <option value="Харламов Александр"></option>
+                    <option value="Семенеев Денис"></option>
                 </datalist>
                 <div className="wrapp__checkbox">
                     <span className="options__work">Вид работ</span>
-                    <input type="text" list='ВидРабот' value={typeCheck} onChange={(e) => setTypeCheck(e.target.value)}/>
+                    <input type="text" list='ВидРабот' value={typeWork} onChange={(e) => setTypeWork(e.target.value)}/>
                     <datalist id='ВидРабот'>
                         <option value="Типовая"></option>
                         <option value="Не типовая"></option>
@@ -263,6 +268,5 @@ const AdWork = () => {
     )
 }
 
-export default AdWork
-
+export default AdWork;
 
