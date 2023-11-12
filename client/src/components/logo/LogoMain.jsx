@@ -1,13 +1,13 @@
 import React from 'react'
-import logoMegagroup from '../../assets/megagroup-logo.svg';
-import styles from './logomain.module.css';
+import logoMegagroup from '../../assets/megagroup-logo.svg'
+import './logomain.css';
 
 const LogoMain = () => {
     return (
-        <div className={styles.logo__megagroup}>
+        <div className="logo__megagroup">
             <img src={logoMegagroup} alt="" />
         </div> 
     )
 }
 
-export default LogoMain
+export default LogoMain;

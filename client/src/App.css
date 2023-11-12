@@ -9,7 +9,7 @@ body{
 *{
     font-family: 'AR One Sans', sans-serif;
 }
-::-webkit-scrollbar{
+/* ::-webkit-scrollbar{
     width: 0;
     height: 0;
-}
+} */

@@ -11,7 +11,7 @@ class DopController {
             typeWork, 
             typeTest,
             recommen,
-            err,
+            errors,
             critic,
             counting,
             iteration,
@@ -19,15 +19,12 @@ class DopController {
             point,
             inspector,
             departament,
-            typeCheck,
             delayTester,
             delayExecutor,
             pointsRemove,
             dispute,
             commentError,
-            dataNum,
-            linkReport,
-            reportMonth
+            linkReport
         } = req.body
         const dopWork = await Dop.create({
             date,
@@ -37,7 +34,7 @@ class DopController {
             typeWork, 
             typeTest,
             recommen,
-            err,
+            errors,
             critic,
             counting,
             iteration,
@@ -45,15 +42,12 @@ class DopController {
             point,
             inspector,
             departament,
-            typeCheck,
             delayTester,
             delayExecutor,
             pointsRemove,
             dispute,
             commentError,
-            dataNum,
-            linkReport,
-            reportMonth 
+            linkReport
         })
         return res.json(dopWork)
     }

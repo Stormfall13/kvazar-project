@@ -14,11 +14,10 @@ const Dop = sequelize.define('dop_work_table', {
     typeWork: {type: DataTypes.STRING},                             // Вид работ
     typeTest: {type: DataTypes.STRING},                             // Вид проверки
     recommen: {type: DataTypes.INTEGER, defaultValue: 0},           // Рекомендации
-    err: {type: DataTypes.INTEGER, defaultValue: 0},                // Ошибки
+    errors: {type: DataTypes.INTEGER, defaultValue: 0},             // Ошибки
     critic: {type: DataTypes.INTEGER, defaultValue: 0},             // Критические ошибки
     counting: {type: DataTypes.STRING},                             // Отчет
-    iteration: {type: DataTypes.INTEGER},                           // Итерации
-    deadlines: {type: DataTypes.STRING},                            // Сроки
+    iteration: {type: DataTypes.INTEGER, defaultValue: 0},          // Итерации
     point: {type: DataTypes.INTEGER},                               // Баллы
     inspector: {type: DataTypes.STRING},                            // Проверяющий
     departament: {type: DataTypes.STRING},                          // Отдел

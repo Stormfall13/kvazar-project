@@ -1,10 +1,10 @@
 import React from 'react'
-import styles from './background.module.css'
+import './background.css'
 import LogoMain from '../logo/LogoMain'
 
 const Background = () => {
     return (
-        <div className={styles.wrapp__megagroup}>
+        <div className="wrapp__megagroup">
             <LogoMain />
         </div>
     )
