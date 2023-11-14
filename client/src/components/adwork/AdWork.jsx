@@ -46,19 +46,65 @@ const AdWork = () => {
         }
     }, [typeTest])
 
-    // useEffect(() => {
-    //     const mainInput = document.querySelectorAll('.point__input')
-    //     for(let mainInputs of mainInput){
-    //         // mainInputs.value = 0
-    //         // console.log(mainInputs.value);
-    //         // console.log(mainInput.value);
-    //         if(mainInputs == undefined){
-    //             setRecommen('0')
-    //             setErrors('0')
-    //             setCritic('0')
-    //         }
-    //     }
-    // })
+    useEffect(() => {
+        if(recommen == ''){
+            setRecommen("0")
+        }
+        if(errors == ''){
+            setErrors("0")
+        }
+        if(critic == ''){
+            setCritic("0")
+        }
+    })
+
+    useEffect(() => {
+        const reglamentInput = document.querySelector('.reglament')
+        if(reglament.length > 0){
+            // console.log('+')
+                reglamentInput.style.border = '2px solid transparent'
+        }
+        if(reglament.length < 1){
+            // console.log('-')
+                reglamentInput.style.border = ''
+        }
+        const executorInput = document.querySelector('.executor')
+        if(executor.length > 0){
+                executorInput.style.border = '2px solid transparent'
+        }
+        if(executor.length < 1){
+                executorInput.style.border = ''
+        }
+        const typeWorkInput = document.querySelector('.type__work')
+        if(typeWork.length > 0){
+                typeWorkInput.style.border = '2px solid transparent'
+        }
+        if(typeWork.length < 1){
+                typeWorkInput.style.border = ''
+        }
+        const amountInput = document.querySelector('.amount')
+        if(amount.length > 0){
+            amountInput.style.border = '2px solid transparent'
+        }
+        if(amount.length < 1){
+                amountInput.style.border = ''
+        }
+        const typeTestInput = document.querySelector('.type__test')
+        if(typeTest.length > 0){
+            typeTestInput.style.border = '2px solid transparent'
+        }
+        if(typeTest.length < 1){
+                typeTestInput.style.border = ''
+        }
+        const countingInput = document.querySelector('.counting')
+        if(counting.length > 0){
+            countingInput.style.border = '1px solid #bbb6b6'
+        }
+        if(counting.length < 1){
+                countingInput.style.border = ''
+        }
+    })
+
 
     const item = {
         "reglament": reglament,
@@ -155,23 +201,23 @@ const AdWork = () => {
 
 
         // Очистка полей формы
-        setReglament('');
-        setExecutor('');
-        setAmount('');
-        setTypeWork('');
-        setTypeTest('');
-        setRecommen('');
-        setErrors('');
-        setCritic('');
-        setCounting('');
-        setIteration('');
-        setPoint('');
-        setInspector('');
-        setDepartament('');
-        setDelayTester('');
-        setDelayExecutor('');
-        setCommentError('');
-        setLinkReport('');
+        // setReglament('');
+        // setExecutor('');
+        // setAmount('');
+        // setTypeWork('');
+        // setTypeTest('');
+        // setRecommen('');
+        // setErrors('');
+        // setCritic('');
+        // setCounting('');
+        // setIteration('');
+        // setPoint('');
+        // setInspector('');
+        // setDepartament('');
+        // setDelayTester('');
+        // setDelayExecutor('');
+        // setCommentError('');
+        // setLinkReport('');
     };
 
 
@@ -180,7 +226,9 @@ const AdWork = () => {
         <div className="ad__container">
             <h1>Доп. Работы</h1>
             <form onSubmit={handleSubmit} className="form__global">
-                <input value={reglament} onChange={(e) => setReglament(e.target.value)} className="main__input" type="text" placeholder='Ссылка на регламент'/>
+                {/* ################## */}
+                <input required value={reglament} onChange={(e) => setReglament(e.target.value)} className="main__input required reglament" type="text" placeholder='Ссылка на регламент'/>
+                {/* ################## */}
                 <input value={inspector} onChange={(e) => setInspector(e.target.value)} className="main__input" type="text" list='Проверяющий' placeholder='Проверяющий'/>
                 <datalist id='Проверяющий'>
                     {executorList && executorList.map((executorElement, id) => {
@@ -191,7 +239,8 @@ const AdWork = () => {
                         }
                     })}
                 </datalist>
-                <input value={executor} onChange={handleChange} className="main__input" type="text" list='Исполнители' placeholder='Исполнители'/>
+                {/* ################## */}
+                <input required value={executor} onChange={handleChange} className="main__input required executor" type="text" list='Исполнители' placeholder='Исполнители'/>
                 <datalist id='Исполнители'>
                     {executorList && executorList.map((executorElement, id) => {
                         return (
@@ -199,71 +248,66 @@ const AdWork = () => {
                         )
                     })}
                 </datalist>
-                <div className="wrapp__checkbox">
-                    <span className="options__work">Вид работ</span>
-                    <input type="text" list='ВидРабот' value={typeWork} onChange={(e) => setTypeWork(e.target.value)}/>
-                    <datalist id='ВидРабот'>
-                        <option value="Типовая"></option>
-                        <option value="Не типовая"></option>
-                        <option value="Средняя"></option>
-                    </datalist> 
-                </div>
-                <div className="quanty__work">
-                    <span className="options__work">Кол-во работ в рег-те</span>
-                    <input type="text" list='КоличествоРабот' value={amount} onChange={(e) => setAmount(e.target.value)} />
-                    <datalist id='КоличествоРабот'>
-                        <option value="1-2"></option>
-                        <option value="3-5"></option>
-                        <option value="6 и более"></option>
-                    </datalist> 
-                </div>
-                <div className="view__work">
-                    <span className="options__work">Вид проверки</span>
-                    <input type="text" list='ВидПроверки' value={typeTest} onChange={(e) => setTypeTest(e.target.value)}/>
-                    <datalist id='ВидПроверки'>
-                        <option value="Первая"></option>
-                        <option value="Итерация"></option>
-                        <option value="Наша ошибка"></option>
-                    </datalist>   
-                </div>
-                <div className="recommen__work">
+                {/* ################## */}
+                <input className='type__work' placeholder='Вид работ' required type="text" list='ВидРабот' value={typeWork} onChange={(e) => setTypeWork(e.target.value)}/>
+                <datalist id='ВидРабот'>
+                    <option value="Типовая"></option>
+                    <option value="Не типовая"></option>
+                    <option value="Средняя"></option>
+                </datalist> 
+                {/* ################## */}
+                <input className='amount' placeholder='Кол-во работ в рег-те' required type="text" list='КоличествоРабот' value={amount} onChange={(e) => setAmount(e.target.value)}/>
+                <datalist id='КоличествоРабот'>
+                    <option value="1-2"></option>
+                    <option value="3-5"></option>
+                    <option value="6 и более"></option>
+                </datalist>
+                {/* ################## */}
+                <input className='type__test' placeholder='Вид проверки' required type="text" list='ВидПроверки' value={typeTest} onChange={(e) => setTypeTest(e.target.value)}/>
+                <datalist id='ВидПроверки'>
+                    <option value="Первая"></option>
+                    <option value="Итерация"></option>
+                    <option value="Наша ошибка"></option>
+                </datalist>   
+                {/* ################## */}
+                <div className="point__work">
                     <span className="options__work">Рекомендации</span>
                     <div className="point__wrapp">
                         <input value={recommen} onChange={(e) => setRecommen(e.target.value)} className="main__input point__input" type="text" />
                     </div>
                 </div>
-                <div className="err__work">
+                {/* ################## */}
+                <div className="point__work">
                     <span className="options__work">Ошибки</span>
                     <div className="point__wrapp">
                         <input value={errors} onChange={(e) => setErrors(e.target.value)} className="main__input point__input" type="text" />
                     </div>
                 </div> 
-                <div className="critic__work">
+                {/* ################## */}
+                <div className="point__work">
                     <span className="options__work">Критические ошибки</span>
                     <div className="point__wrapp">
                         <input value={critic} onChange={(e) => setCritic(e.target.value)} className="main__input point__input" type="text" />
                     </div>
                 </div>
+                {/* ################## */}
                 <div className="counting__wrapp">
-                    <span className="options__work">Отчет*</span>
-                    <textarea type="text" value={counting} onChange={(e) => setCounting(e.target.value)} placeholder="Мой ответ" />
+                    <span className="options__work">Отчет<span className='red__star'>*</span></span>
+                    <textarea className='counting' required type="text" value={counting} onChange={(e) => setCounting(e.target.value)} placeholder="Мой ответ" />
                 </div>
-                <div className="view__work">
-                    <span className="options__work">Просрочка тестировщика</span>
-                    <input type="text" list='ПросрочкаТестировщика' value={delayTester} onChange={(e) => setDelayTester(e.target.value)}/>
-                    <datalist id='ПросрочкаТестировщика'>
-                        <option value="Внутренняя"></option>
-                        <option value="Внешняя"></option>
-                    </datalist>
-                </div> 
-                <div className="view__work">
-                    <span className="options__work">Просрочка исполнителя</span>
-                    <input type="text" list='ПросрочкаИсполнителя' value={delayExecutor} onChange={(e) => setDelayExecutor(e.target.value)}/>
-                    <datalist id='ПросрочкаИсполнителя'>
-                        <option value="Внутренняя"></option>
-                        <option value="Внешняя"></option>
-                    </datalist>
-                </div>
+                {/* ################## */}
+                <input placeholder='Просрочка тестировщика' type="text" list='ПросрочкаТестировщика' value={delayTester} onChange={(e) => setDelayTester(e.target.value)}/>
+                <datalist id='ПросрочкаТестировщика'>
+                    <option value="Внутренняя"></option>
+                    <option value="Внешняя"></option>
+                </datalist>
+                {/* ################## */}
+                <input placeholder='Просрочка исполнителя' type="text" list='ПросрочкаИсполнителя' value={delayExecutor} onChange={(e) => setDelayExecutor(e.target.value)}/>
+                <datalist id='ПросрочкаИсполнителя'>
+                    <option value="Внутренняя"></option>
+                    <option value="Внешняя"></option>
+                </datalist>
+                {/* ################## */}
                 <button type="submit" className="btn__main">Отправить</button>
             </form>
         </div>
@@ -271,4 +315,3 @@ const AdWork = () => {
 }
 
 export default AdWork;
-

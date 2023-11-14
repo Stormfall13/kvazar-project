@@ -4,8 +4,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-  }
-  .form__global{
+}
+.form__global{
     max-width: 600px;
     width: 100%;
     display: flex;
@@ -17,58 +17,50 @@
     border-radius: 30px;
     box-sizing: border-box;
     padding: 30px;
-  }
-  input{
-    border: 0;
+}
+input{
+    border: 3px solid transparent;
     outline: none;
-  }
-  .main__input{
+    transition: 0.8s;
     border-radius: 10px;
     margin: 10px 0;
     padding: 20px 15px 20px 15px;
     max-width: 290px;
     width: 100%;
     font-size: 18px;
-    color: #160B34; 
-  }
-  input::placeholder{
+    color: #160B34;
+    cursor: pointer;
+}
+.reglament, 
+.executor, 
+.type__work, 
+.amount,
+.type__test{
+    border: 2px solid rgba(255, 0, 0, 0.5);
+}
+input::placeholder{
     color: #160B34;
     font-family: 'AR One Sans', sans-serif; 
     font-size: 18px;
-  }
-  textarea{
+}
+textarea{
     border: 0;
     outline: none;
     resize: none;
-  }
-  .btn__main{
+    margin: 5px 0;
+}
+.btn__main{
     border: 0;
     outline: none;
-    color: #160B34;
+    color: #fff;
     font-family: 'AR One Sans', sans-serif; 
     font-size: 18px; 
     padding: 10px 20px;
     border-radius: 8px;
-  }
-  .wrapp__checkbox{
-    margin: 10px 0;
-    background: #fff;
-    max-width: 320px;
-    width: 100%;
-    border-radius: 10px;
-    box-sizing: border-box;
-    padding: 8px 10px; 
-  }
-  .quanty__work{
-    margin: 10px 0;
-    background: #fff;
-    max-width: 320px;
-    width: 100%;
-    border-radius: 10px;
-    box-sizing: border-box;
-    padding: 8px 10px; 
-  }
-  .view__work{
+    background: #25bf53;
+    cursor: pointer;
+}
+.point__work{
     margin: 10px 0;
     background: #fff;
     max-width: 320px;
@@ -76,35 +68,8 @@
     border-radius: 10px;
     box-sizing: border-box;
     padding: 8px 10px;  
-  }
-  .recommen__work{
-    margin: 10px 0;
-    background: #fff;
-    max-width: 320px;
-    width: 100%;
-    border-radius: 10px;
-    box-sizing: border-box;
-    padding: 8px 10px;  
-  }
-  .err__work{
-    margin: 10px 0;
-    background: #fff;
-    max-width: 320px;
-    width: 100%;
-    border-radius: 10px;
-    box-sizing: border-box;
-    padding: 8px 10px;  
-  }
-  .critic__work{
-    margin: 10px 0;
-    background: #fff;
-    max-width: 320px;
-    width: 100%;
-    border-radius: 10px;
-    box-sizing: border-box;
-    padding: 8px 10px;  
-  }
-  .counting__wrapp{
+}
+.counting__wrapp{
     margin: 10px 0;
     background: #fff;
     max-width: 320px;
@@ -114,31 +79,28 @@
     padding: 8px 10px;  
     display: flex;
     flex-direction: column; 
-  }
-  .counting__wrapp textarea{
+}
+.counting__wrapp textarea{
     min-height: 100px;
     padding: 5px 0 0 5px;
-    border: 1px solid #bbb6b6;
+    border: 1px solid rgba(255, 0, 0, 0.5);
     border-radius: 10px;
     font-size: 20px;
-  }
-  .counting__wrapp textarea::placeholder{
+    transition: 0.8s;
+}
+.counting__wrapp textarea::placeholder{
     font-size: 20px;
-  }
-  .point__wrapp input:last-child{
+}
+.point__wrapp input:last-child{
     padding: 20px 0px 20px 15px;
     border: 1px solid #bbb6b6;
     max-width: 285px;
-  }
-  .checkbox__input{
-    width: 20px;
-    height: 20px;
-  }
-  .options__work{
-    font-size: 24px;
-    font-weight: 600;
-  }
-  .type__work{
+}
+.options__work{
     font-size: 20px;
-  }
-  
+    color: #424242;
+    font-weight: 600;
+}
+.red__star{
+  color: #f00;
+}

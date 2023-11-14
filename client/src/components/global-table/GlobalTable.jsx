@@ -28,31 +28,57 @@ const GlobalTable = () => {
             <h2 className="title__second">Отчет по доп работам</h2>
             <div className="m__container">
                 <div className="wrapp__table">
+                <div className="title__table">
+                    <p>ID</p>
+                    <p>Дата</p>
+                    <p>Ссылка на регламент</p>
+                    <p>Проверяющий</p>
+                    <p>Исполнитель</p>
+                    <p>Кол-во доп работ в рег-те</p>
+                    <p>Вид работ</p>
+                    <p>Вид проверки</p>
+                    <p>Рекомендации</p>
+                    <p>Ошибки</p>
+                    <p>Крит-е ошибки</p>
+                    <p>Отчет</p>
+                    <p>Итерация</p>
+                    <p>Снятые баллы</p>
+                    <p>Спор</p>
+                    <p>Коммент ошибки</p>
+                    <p>Сроки</p>
+                    <p>Просрочка тестировщика</p>
+                    <p>Баллы</p>
+                    <p>Просрочка исполнителя</p>
+                    <p>Департамент</p>
+                    <p>Ссылка для отчета</p>
+                </div>
                 {dopWorks && dopWorks.map(dopWork => {
                     return(
                         <div key={dopWork.id} className="wrapper__container">
-                            <p>ID <span>{dopWork.id}</span></p>
-                            <p>{(new Date(dopWork.date)).toLocaleDateString()}</p>
-                            <p className='link__reg'>Ссылка на регламент: <a className='link__reglament' href={dopWork.reglament} target='_blank'>{dopWork.reglament}</a></p>
-                            <p>Проверяющий: <span>{dopWork.inspector}</span></p>
-                            <p>Исполнитель: <span>{dopWork.executor}</span></p>
-                            <p>Кол-во доп работ в реге: <span>{dopWork.amount}</span></p>
-                            <p>Вид работ: <span>{dopWork.typeWork}</span></p>
-                            <p>Вид проверки: <span>{dopWork.typeTest}</span></p>
-                            <p>Рекомендации: <span>{dopWork.recommen}</span></p>
-                            <p>Ошибки: <span>{dopWork.errors}</span></p>
-                            <p>Крит-е ошибки: <span>{dopWork.critic}</span></p>
-                            <p>Отчет: <span>{dopWork.counting}</span></p>
-                            <p>Итерация: <span>{dopWork.iteration}</span></p>
-                            <p>Снятые баллы: <span>{dopWork.pointsRemove}</span></p>
-                            <p>Спор: <span>{dopWork.dispute}</span></p>
-                            <p>Коммент ошибки: <span>{dopWork.commentError}</span></p>
-                            <p>Сроки: <span>{dopWork.deadlines}</span></p>
-                            <p>Просрочка тестировщика: <span>{dopWork.delayTester}</span></p>
-                            <p>Баллы: <span>{dopWork.point}</span></p>
-                            <p>Просрочка исполнителя: <span>{dopWork.delayExecutor}</span></p>
-                            <p>Департамент: <span>{dopWork.departament}</span></p>
-                            <p>Ссылка для отчета <a href={dopWork.linkReport} target='_blank'>{dopWork.linkReport}</a></p>
+                            <ul>
+                                <li>{dopWork.id}</li>
+                                <li>{(new Date(dopWork.date)).toLocaleDateString()}</li>
+                                <li><a className='link__reglament' href={dopWork.reglament} target='_blank'>{dopWork.reglament}</a></li>
+                                <li>{dopWork.inspector}</li>
+                                <li>{dopWork.executor}</li>
+                                <li>{dopWork.amount}</li>
+                                <li>{dopWork.typeWork}</li>
+                                <li>{dopWork.typeTest}</li>
+                                <li>{dopWork.recommen}</li>
+                                <li>{dopWork.errors}</li>
+                                <li>{dopWork.critic}</li>
+                                <li>{dopWork.counting}</li>
+                                <li>{dopWork.iteration}</li>
+                                <li>{dopWork.pointsRemove}</li>
+                                <li>{dopWork.dispute}</li>
+                                <li>{dopWork.commentError}</li>
+                                <li>{dopWork.deadlines}</li>
+                                <li>{dopWork.delayTester}</li>
+                                <li>{dopWork.point}</li>
+                                <li>{dopWork.delayExecutor}</li>
+                                <li>{dopWork.departament}</li>
+                                <li><a href={dopWork.linkReport} target='_blank'>{dopWork.linkReport}</a></li>
+                            </ul> 
                         </div>
                     )
                 })} 
