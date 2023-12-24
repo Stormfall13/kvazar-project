@@ -1,0 +1,7 @@
+.auth{
+    display: flex;
+    flex-direction: column;
+}
+.auth input{
+    margin: 5px 0;
+}
