@@ -10,7 +10,7 @@ const AppRouter = () => {
     // const isAuth = false
     const {user} = useContext(Context)
 
-    console.log(user);
+    // console.log(user);
 
     return (
         <div>
