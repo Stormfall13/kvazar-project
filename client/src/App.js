@@ -11,10 +11,30 @@ import GlobalTable from './components/global-table/GlobalTable';
 import AppRouter from './components/AppRouter';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/navbar/NavBar';
+import { observer } from 'mobx-react-lite';
+import {Context} from './index';
+import { useEffect, useState, useContext } from 'react';
+import {check} from './http/userApi';
 
 
+const App = observer(() => {
 
-function App() {
+  const {user} = useContext(Context)
+  const [ loading, setLoading ] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      check().then(data => {
+        user.setUser(true)
+        user.setIsAuth(true)
+      }).finally(() => setLoading(false))
+    }, 1000)
+  }, [])
+
+  if(loading){
+    return 'Загрузка'
+  }
+
   return (
     <BrowserRouter>
       <div className='App'>
@@ -36,7 +56,7 @@ function App() {
       </div>
     </BrowserRouter>
   );
-}
+})
 
 // background: #112d49; Для темного режима
 

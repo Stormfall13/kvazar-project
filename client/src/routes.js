@@ -1,7 +1,7 @@
 import Admin from './pages/Admin';
 import Auth from './pages/Auth';
 import Main from './components/main/Main';
-import { ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from './utils/consts';
+import {  LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, ADMIN_ROUTE } from './utils/consts';
 
 export const authRoutes = [
     {
