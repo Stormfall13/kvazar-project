@@ -32,36 +32,17 @@ class UserController {
         
     }
     async login(req, res, next){
-        // const {email, password} = req.body
-        // const user = await User.findOne({where: {email}})
-        // if(!user){
-        //     return next(ApiError.internal('Пользователь не найден'))
-        // }
-        // let comparePassword = bcrypt.compareSync(password, user.password)
-        // if(!comparePassword){
-        //     return next(ApiError.internal('Указан неверный пароль'))
-        // }
-        // const token = generateJwt(user.id, user.email, user.role)
-        // return res.json({token})
-        const {email, password} = req.body;
-        if (!email || !password) {
-            return next(ApiError.badRequest('Некорректный email или password'));
+        const {email, password} = req.body
+        const user = await User.findOne({where: {email}})
+        if(!user){
+            return next(ApiError.internal('Пользователь не найден'))
         }
-        try {
-            const user = await User.findOne({where: {email}});
-            if(!user){
-                return next(ApiError.internal('Пользователь не найден'));
-            }
-            const isPasswordValid = await bcrypt.compare(password, user.password);
-            if(!isPasswordValid){
-                return next(ApiError.internal('Указан неверный пароль'));
-            }
-            const token = generateJwt(user.id, user.email, user.role);
-            return res.json({token});
-        } catch (error) {
-            return next(ApiError.internal('Login error')); // Handle the error
+        let comparePassword = bcrypt.compareSync(password, user.password)
+        if(!comparePassword){
+            return next(ApiError.internal('Указан неверный пароль'))
         }
-    
+        const token = generateJwt(user.id, user.email, user.role)
+        return res.json({token})
     }
     async check(req, res){
         const token = generateJwt(req.user.id, req.user.email, req.user.role)

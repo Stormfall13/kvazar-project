@@ -60,7 +60,7 @@ const Auth = observer(() => {
         </div>
       </form>
     </div>
-  )
-})
+  );
+});
 
 export default Auth;

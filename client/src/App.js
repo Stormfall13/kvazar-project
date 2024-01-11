@@ -1,7 +1,6 @@
 import './App.css';
 import Background from './components/background/Background';
 import Main from './components/main/Main';
-import NotFound from './components/notFound/NotFound';
 import AdWork from './components/adwork/AdWork'
 import NewSite from './components/newsite/NewSite'
 import Listening from './components/listening/Listening'
@@ -23,13 +22,11 @@ const App = observer(() => {
   const [ loading, setLoading ] = useState(true)
 
   useEffect(() => {
-    setTimeout(() => {
-      check().then(data => {
+    check().then(data => {
         user.setUser(true)
         user.setIsAuth(true)
-      }).finally(() => setLoading(false))
-    }, 1000)
-  }, [])
+    }).finally(() => setLoading(false))
+}, [])
 
   if(loading){
     return 'Загрузка'
