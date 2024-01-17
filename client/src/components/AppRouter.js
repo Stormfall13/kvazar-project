@@ -13,10 +13,10 @@ const AppRouter = () => {
         <div>
             <Routes>
                 {user.isAuth && authRoutes.map(({ path, Component }) =>
-                    <Route key={path} path={path} element={<Component />} />
+                    <Route key={path} path={path} element={<Component />} replace={true} />
                 )}
                 {publicRoutes.map(({ path, Component }) =>
-                    <Route key={path} path={path} element={<Component />} />
+                    <Route key={path} path={path} element={<Component />} replace={true} />
                 )}
                 {/* Редирект для несуществующих путей */}
                 <Route path="*" element={user.isAuth ? <Navigate to={ADMIN_ROUTE} replace /> : <Navigate to={LOGIN_ROUTE} replace />} />
