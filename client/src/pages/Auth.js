@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import './auth.css';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts';
 import { login, registration } from '../http/userApi';
 import { observer } from 'mobx-react-lite';
@@ -8,9 +8,10 @@ import { Context } from '../index';
 
 
 const Auth = observer(() => {
-  const {user} = useContext(Context)
-  const location = useLocation()
-  const history = useLocation()
+  const {user} = useContext(Context);
+  const location = useLocation();
+  // const history = useLocation();
+  const navigate = useNavigate();
   const isLogin = location.pathname === LOGIN_ROUTE
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -25,7 +26,8 @@ const Auth = observer(() => {
       }
       user.setUser(user)
       user.setIsAuth(true) 
-      history.push(MAIN_ROUTE)
+      // history.push(MAIN_ROUTE)
+      navigate(MAIN_ROUTE)
     } catch (e) {
       alert(e.response.data.message)
     }

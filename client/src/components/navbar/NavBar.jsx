@@ -7,11 +7,14 @@ import { LOGIN_ROUTE } from '../../utils/consts';
 const NavBar = observer(() => {
 
     const {user} = useContext(Context)
-    const history = useLocation();
+    console.log(user);
+    // const history = useLocation();
+    const navigate = useNavigate();
 
     const logOut = () => {
         user.setUser({})
         user.setIsAuth(false)
+        navigate(LOGIN_ROUTE)
     }
 
     return (
@@ -19,7 +22,8 @@ const NavBar = observer(() => {
             {user.isAuth ? 
             <button onClick={() => logOut()}>Выйти</button>
             :
-            <button onClick={() => history.push(LOGIN_ROUTE)}>Авторизация</button>
+            // <button onClick={() => history.push(LOGIN_ROUTE)}>Авторизация</button>
+            <button onClick={() => navigate(LOGIN_ROUTE)}>Авторизация</button>
         }
             
         </div>

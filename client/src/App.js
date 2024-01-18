@@ -41,13 +41,13 @@ const App = observer(() => {
         <NavBar/>
         <Routes>
           {/* <Route path='admin' element={<AppRouter/>}/> */}
-          <Route path='/' element={<Main />} />
-          <Route path='adwork' element={<AdWork />} />
-          <Route path='newsite' element={<NewSite />} />
-          <Route path='listening' element={<Listening />} />
-          <Route path='operator' element={<Operator />} />
-          <Route path='techsupport' element={<TechSupport />} />
-          <Route path='globalTable' element={<GlobalTable />} />
+          <Route path='/admin' element={<Main />} />
+          <Route path='admin/adwork' element={<AdWork />} />
+          <Route path='admin/newsite' element={<NewSite />} />
+          <Route path='admin/listening' element={<Listening />} />
+          <Route path='admin/operator' element={<Operator />} />
+          <Route path='admin/techsupport' element={<TechSupport />} />
+          <Route path='admin/globalTable' element={<GlobalTable />} />
           {/* <Route path='*' element={<NotFound />} /> */}
         </Routes>
       </div>

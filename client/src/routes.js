@@ -1,7 +1,8 @@
 import Admin from './pages/Admin';
 import Auth from './pages/Auth';
 import Main from './components/main/Main';
-import {  LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, ADMIN_ROUTE } from './utils/consts';
+import {  LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, ADMIN_ROUTE, ADWORK_ROUTE } from './utils/consts';
+import AdWork from './components/adwork/AdWork';
 
 export const authRoutes = [
     {
@@ -11,6 +12,10 @@ export const authRoutes = [
     {
         path: MAIN_ROUTE,
         Component: Main
+    },
+    {
+        path: ADWORK_ROUTE,
+        Component: AdWork
     }
 ]
 
