@@ -16,6 +16,8 @@ const Auth = observer(() => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
+  console.log(user);
+
   const click = async () => {
     try {
       let data;

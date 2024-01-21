@@ -16,44 +16,73 @@ import { useEffect, useState, useContext } from 'react';
 import {check} from './http/userApi';
 
 
-const App = observer(() => {
+// const App = observer(() => {
 
-  const {user} = useContext(Context)
-  const [ loading, setLoading ] = useState(true)
+//   const {user} = useContext(Context)
+//   const [ loading, setLoading ] = useState(true)
 
-  useEffect(() => {
-    check().then(data => {
-        user.setUser(true)
-        user.setIsAuth(true)
-    }).finally(() => setLoading(false))
-  }, [])
+//   useEffect(() => {
+//     check().then(data => {
+//         user.setUser(true)
+//         user.setIsAuth(true)
+//     }).finally(() => setLoading(false))
+//   }, [])
 
-  if(loading){
-    return 'Загрузка'
-  }
+//   if(loading){
+//     return 'Загрузка'
+//   }
+
+//   return (
+//     <BrowserRouter>
+//       <div className='App'>
+//         <div style={{fontSize: '40px'}}>Здесь будет переключатель темы</div>
+//         <AppRouter/>
+//         <Background />
+//         <NavBar/>
+//         <Routes>
+//           {/* <Route path='admin' element={<AppRouter/>}/> */}
+//           <Route path='/' element={<Main />} />
+//           <Route path='/adwork' element={<AdWork />} />
+//           <Route path='/newsite' element={<NewSite />} />
+//           <Route path='/listening' element={<Listening />} />
+//           <Route path='/operator' element={<Operator />} />
+//           <Route path='/techsupport' element={<TechSupport />} />
+//           <Route path='/globalTable' element={<GlobalTable />} />
+//           {/* <Route path='*' element={<NotFound />} /> */}
+//         </Routes>
+//       </div>
+//     </BrowserRouter>
+//   );
+// })
+
+// // background: #112d49; Для темного режима
+
+// export default App;
+
+
+const App = () => {
+
 
   return (
     <BrowserRouter>
       <div className='App'>
         <div style={{fontSize: '40px'}}>Здесь будет переключатель темы</div>
-        <AppRouter/>
         <Background />
-        <NavBar/>
         <Routes>
           {/* <Route path='admin' element={<AppRouter/>}/> */}
-          <Route path='/admin' element={<Main />} />
-          <Route path='admin/adwork' element={<AdWork />} />
-          <Route path='admin/newsite' element={<NewSite />} />
-          <Route path='admin/listening' element={<Listening />} />
-          <Route path='admin/operator' element={<Operator />} />
-          <Route path='admin/techsupport' element={<TechSupport />} />
-          <Route path='admin/globalTable' element={<GlobalTable />} />
+          <Route path='/' element={<Main />} />
+          <Route path='/adwork' element={<AdWork />} />
+          <Route path='/newsite' element={<NewSite />} />
+          <Route path='/listening' element={<Listening />} />
+          <Route path='/operator' element={<Operator />} />
+          <Route path='/techsupport' element={<TechSupport />} />
+          <Route path='/globalTable' element={<GlobalTable />} />
           {/* <Route path='*' element={<NotFound />} /> */}
         </Routes>
       </div>
     </BrowserRouter>
   );
-})
+}
 
 // background: #112d49; Для темного режима
 

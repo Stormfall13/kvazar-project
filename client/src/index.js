@@ -1,18 +1,19 @@
-import React, { createContext } from 'react';
+// import React, { createContext } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import UserStore from './store/UserStore';
+// import UserStore from './store/UserStore';
 
-export const Context = createContext(null)
+// export const Context = createContext(null)
 // console.log(process.env.REACT_APP_API_URL);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <Context.Provider value={{
-        user: new UserStore()
-    }}>
+    // <Context.Provider value={{
+        // user: new UserStore()
+    // }}>
        <App /> 
-    </Context.Provider>
+    /* </Context.Provider> */
 );
 
