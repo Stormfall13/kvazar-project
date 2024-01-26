@@ -27,17 +27,22 @@
 .wrapper__container{
   display: flex;
   align-items: center;
-  margin: 5px 0;
+  /* margin: 5px 0; */
   width: 100%;
 }
+/* .wrapper__container:nth-child(2){
+  margin-top: 45px;
+} */
 /* .title__table{
-
+  position: fixed;
+  z-index: 1;
 } */
 .title__table p{
   width: 216px;
   text-align: center;
   background: green;
   padding: 10px 0;
+  margin: 0 0 2px 0;
   color: #fff;
   display: inline-block;
 }
@@ -45,11 +50,12 @@ ul{
   list-style-type: none;
   display: flex;
   padding: 0;
+  margin: 0;
 }
 li{
   background: rgba(255, 255, 255, 0.5);
   padding: 10px 7px;
-  margin: 10px 0;
+  margin: 2px 0;
   border-right: 2px solid #000; 
   display: flex;
   flex-direction: column;
