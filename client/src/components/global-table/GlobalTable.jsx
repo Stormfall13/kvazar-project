@@ -16,99 +16,43 @@ import {
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
 import {
-  randomCreatedDate,
-  randomTraderName,
-  randomId,
   randomArrayItem,
 } from '@mui/x-data-grid-generator';
+import { v4 as uuidv4 } from 'uuid';
 
 const roles = ['Market', 'Finance', 'Development'];
 const randomRole = () => {
   return randomArrayItem(roles);
 };
 
-const initialRows = [
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 25,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 36,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 19,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 28,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 23,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
-  },
-];
-
-// function EditToolbar(props) {
-//   const { setRows, setRowModesModel } = props;
-
-//   const handleClick = () => {
-//     const id = randomId();
-//     setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
-//     setRowModesModel((oldModel) => ({
-//       ...oldModel,
-//       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-//     }));
-//   };
-
-//   return (
-//    //  <GridToolbarContainer>
-//    //    <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-//    //      Add record
-//    //    </Button>
-//    //  </GridToolbarContainer>
-// 	false
-//   );
-// }
 
 const GlobalTable = () => {
 
-    const [dopWorks, setDopWorks] = useState([]);
-
-    useEffect(() => {
-        fetch('http://localhost:5000/api/dop-work', {
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        })
-        .then(res => res.json())
-        .then(response => {
-            setTimeout(() => {
-                setDopWorks(response)
-            })
-        })
-    }, [])
-
-    // console.log(dopWorks)
-	 const [rows, setRows] = React.useState(initialRows);
+	 const [rows, setRows] = React.useState([]);
 	 const [rowModesModel, setRowModesModel] = React.useState({});
+
+
+	 useEffect(() => {
+		const fetchData = async () => {
+		  try {
+			const response = await fetch('http://localhost:5000/api/dop-work', {
+			  method: "GET",
+			  headers: {
+				"Accept": "application/json"
+			  }
+			});
+			const data = await response.json();
+			// console.log(data);
+			// setRows(data.map((item) => ({ ...item, id: item.key || item.id })));
+			setRows(data.map((item, index) => ({ ...item, id: item.key || item.id || index })));
+		  } catch (error) {
+			console.error("Failed to fetch data: ", error);
+		  }
+		};
+	  
+		fetchData();
+	  }, []);
+
  
 	 const handleRowEditStop = (params, event) => {
 		 if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -118,11 +62,34 @@ const GlobalTable = () => {
  
 	 const handleEditClick = (id) => () => {
 		 setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+		 console.log(id);
 	 };
  
-	 const handleSaveClick = (id) => () => {
-		 setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-	 };
+	 const handleSaveClick = (id) => async () => {
+		setRowModesModel((prev) => ({ ...prev, [id]: { mode: GridRowModes.View } }));
+	
+		const row = rows.find((r) => r.id === id);
+		console.log(row);
+		try {
+			const response = await fetch(`http://localhost:5000/api/dop-work/${id}`, {
+				method: 'PUT',
+				headers: {
+					"Accept": "application/json",
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(row),
+			});
+			if (!response.ok) {
+				throw new Error('Something went wrong while saving');
+			}
+	
+			
+			const updatedRow = await response.json();
+			setRows((prev) => prev.map((row) => (row.id === id ? updatedRow : row)));
+		} catch (error) {
+			console.error("Failed to save data: ", error);
+		}
+	};
  
 	 const handleDeleteClick = (id) => () => {
 		 setRows(rows.filter((row) => row.id !== id));
@@ -151,27 +118,39 @@ const GlobalTable = () => {
 	 };
  
 	 const columns = [
-		 { field: 'name', headerName: 'ID', width: 180, editable: true },
+		 { field: 'id', headerName: 'ID', width: 50, cellClassName: 'cellColumn' },
 		 {
-			 field: 'Date',
+			 field: 'date',
 			 headerName: 'Дата',
 			 type: 'number',
-			 width: 80,
+			 width: 100,
 			 align: 'left',
 			 headerAlign: 'left',
-			 editable: true,
+			 cellClassName: 'cellColumn',
 		 },
 		 {
-			 field: 'link',
+			 field: 'reglament',
 			 headerName: 'Ссылка на регламент',
-			 type: 'text',
+			 type: 'link',
 			 width: 180,
 			 editable: true,
+			 cellClassName: 'cellColumn',
+			 renderCell: (params) => {
+				const reglamentIndex = params.value.indexOf('/reglament');
+				const displayText = reglamentIndex !== -1 ? params.value.substring(reglamentIndex) : 'Нет ссылки';
+			
+				return (
+				  <a href={params.value} target="_blank" rel="noopener noreferrer">
+					{displayText}
+				  </a>
+				);
+			  },
+			
 		 },
 		 {
 			 field: 'inspector',
 			 headerName: 'Проверяющй',
-			 width: 220,
+			 width: 180,
 			 editable: true,
 			 type: 'text',
 			 valueOptions: ['Market', 'Finance', 'Development'],
@@ -189,82 +168,83 @@ const GlobalTable = () => {
 			type: 'text',
 			width: 180,
 			editable: true,
+			
 		},
 		{
 			field: 'typeWork',
 			headerName: 'Вид работ',
 			type: 'text',
-			width: 180,
+			width: 120,
 			editable: true,
 		},
 		{
 			field: 'typeTest',
 			headerName: 'Вид проверки',
 			type: 'text',
-			width: 180,
+			width: 120,
 			editable: true,
 		},
 		{
 			field: 'recommen',
 			headerName: 'Рекомендации',
 			type: 'text',
-			width: 180,
+			width: 120,
 			editable: true,
 		},
 		{
 			field: 'errors',
 			headerName: 'Ошибки',
 			type: 'text',
-			width: 180,
+			width: 80,
 			editable: true,
 		},
 		{
 			field: 'critic',
 			headerName: 'Крит-е ошибки',
 			type: 'text',
-			width: 180,
+			width: 120,
 			editable: true,
 		},
 		{
 			field: 'counting',
 			headerName: 'Отчет',
 			type: 'text',
-			width: 180,
+			width: 120,
 			editable: true,
 		},
 		{
 			field: 'iteration',
 			headerName: 'Итерация',
 			type: 'text',
-			width: 180,
+			width: 100,
 			editable: true,
 		},
 		{
 			field: 'pointsRemove',
 			headerName: 'Снятые баллы',
 			type: 'text',
-			width: 180,
+			width: 120,
 			editable: true,
 		},
 		{
 			field: 'dispute',
 			headerName: 'Спор',
 			type: 'text',
-			width: 180,
+			width: 60,
 			editable: true,
 		},
 		{
 			field: 'commentError',
 			headerName: 'Коммент ошибки',
 			type: 'text',
-			width: 180,
+			width: 140,
 			editable: true,
 		},
 		{
 			field: 'deadlines',
 			headerName: 'Сроки',
 			type: 'text',
-			width: 180,
+			width: 100,
 			editable: true,
 		},
 		{
@@ -278,7 +258,7 @@ const GlobalTable = () => {
 			field: 'point',
 			headerName: 'Баллы',
 			type: 'text',
-			width: 180,
+			width: 60,
 			editable: true,
 		},
 		{
@@ -297,58 +277,79 @@ const GlobalTable = () => {
 		},
 		 {
 			 field: 'linkReport',
-			 type: 'text',
+			 type: 'link',
 			 headerName: 'Ссылка для отчета',
 			 width: 200,
-			 cellClassName: 'text',
-			 getActions: ({ id }) => {
-			 const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-			 
- 
-			 if (isInEditMode) {
-				 return [
-					 <GridActionsCellItem
-					 icon={<SaveIcon />}
-					 label="Save"
-					 sx={{
-						 color: 'primary.main',
-					 }}
-					 onClick={handleSaveClick(id)}
-					 />,
-					 <GridActionsCellItem
-					 icon={<CancelIcon />}
-					 label="Cancel"
-					 className="textPrimary"
-					 onClick={handleCancelClick(id)}
-					 color="inherit"
-					 />,
-				 ];
-			 }
- 
-			 return [
-				 <GridActionsCellItem
-					 icon={<EditIcon />}
-					 label="Edit"
-					 className="textPrimary"
-					 onClick={handleEditClick(id)}
-					 color="inherit"
-				 />,
-				 <GridActionsCellItem
-					 icon={<DeleteIcon />}
-					 label="Delete"
-					 onClick={handleDeleteClick(id)}
-					 color="inherit"
-				 />,
-			 ];
-			 },
+			 cellClassName: 'action',
+			 renderCell: (params) => {
+				if (!params.value) {
+				  return <span>Invalid URL</span>;
+				}
+			
+				const reglamentIndex = params.value.indexOf('/reglament');
+				const displayText = reglamentIndex !== -1 ? params.value.substring(reglamentIndex) : params.value;
+			  
+				return (
+				  <a href={params.value} target="_blank" rel="noopener noreferrer">
+					{displayText}
+				  </a>
+				);
+			  },
 		 },
+		 {
+			field: 'actions',
+			type: 'actions',
+			headerName: 'Параметры',
+			width: 100,
+			cellClassName: 'actions',
+			getActions: ({ id }) => {
+			  const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+	  
+			  if (isInEditMode) {
+				return [
+				  <GridActionsCellItem
+					icon={<SaveIcon />}
+					label="Save"
+					sx={{
+					  color: 'primary.main',
+					}}
+					onClick={handleSaveClick(id)}
+				  />,
+				  <GridActionsCellItem
+					icon={<CancelIcon />}
+					label="Cancel"
+					className="textPrimary"
+					onClick={handleCancelClick(id)}
+					color="inherit"
+				  />,
+				];
+			  }
+	  
+			  return [
+				<GridActionsCellItem
+				  icon={<EditIcon />}
+				  label="Edit"
+				  className="textPrimary"
+				  onClick={handleEditClick(id)}
+				  color="inherit"
+				/>,
+				<GridActionsCellItem
+				  icon={<DeleteIcon />}
+				  label="Delete"
+				  onClick={handleDeleteClick(id)}
+				  color="inherit"
+				/>,
+			  ];
+			},
+		  },
 	 ];
  
 	 return (
 		 <Box
 			 sx={{
 			 height: 500,
-			 width: '100%',
+			 maxWidth: '1800px',
+			 margin: '0 auto',
 			 '& .actions': {
 				 color: 'text.secondary',
 			 },
@@ -360,6 +361,7 @@ const GlobalTable = () => {
 			 <DataGrid
 			 rows={rows}
 			 columns={columns}
+			 getRowId={(row) => row.id}
 			 editMode="row"
 			 rowModesModel={rowModesModel}
 			 onRowModesModelChange={handleRowModesModelChange}
@@ -372,72 +374,6 @@ const GlobalTable = () => {
 		 </Box>
 	 );
 	 
-
-
-   //  return (
-   //      <div className='main__table'>
-   //          <h1>Глобальная таблица</h1>
-   //          <h2 className="title__second">Отчет по доп работам</h2>
-   //          {/* <div className="m__container">
-   //              <div className="wrapp__table">
-   //              <div className="title__table">
-   //                  <p>ID</p>
-   //                  <p>Дата</p>
-   //                  <p>Ссылка на регламент</p>
-   //                  <p>Проверяющий</p>
-   //                  <p>Исполнитель</p>
-   //                  <p>Кол-во доп работ в рег-те</p>
-   //                  <p>Вид работ</p>
-   //                  <p>Вид проверки</p>
-   //                  <p>Рекомендации</p>
-   //                  <p>Ошибки</p>
-   //                  <p>Крит-е ошибки</p>
-   //                  <p>Отчет</p>
-   //                  <p>Итерация</p>
-   //                  <p>Снятые баллы</p>
-   //                  <p>Спор</p>
-   //                  <p>Коммент ошибки</p>
-   //                  <p>Сроки</p>
-   //                  <p>Просрочка тестировщика</p>
-   //                  <p>Баллы</p>
-   //                  <p>Просрочка исполнителя</p>
-   //                  <p>Департамент</p>
-   //                  <p>Ссылка для отчета</p>
-   //              </div>
-   //              {dopWorks && dopWorks.map(dopWork => {
-   //                  return(
-   //                      <div key={dopWork.id} className="wrapper__container">
-   //                          <ul>
-   //                              <li>{dopWork.id}</li>
-   //                              <li>{(new Date(dopWork.date)).toLocaleDateString()}</li>
-   //                              <li><a className='link__reglament' href={dopWork.reglament} target='_blank'>{dopWork.reglament}</a></li>
-   //                              <li>{dopWork.inspector}</li>
-   //                              <li>{dopWork.executor}</li>
-   //                              <li>{dopWork.amount}</li>
-   //                              <li>{dopWork.typeWork}</li>
-   //                              <li>{dopWork.typeTest}</li>
-   //                              <li>{dopWork.recommen}</li>
-   //                              <li>{dopWork.errors}</li>
-   //                              <li>{dopWork.critic}</li>
-   //                              <li>{dopWork.counting}</li>
-   //                              <li>{dopWork.iteration}</li>
-   //                              <li>{dopWork.pointsRemove}</li>
-   //                              <li>{dopWork.dispute}</li>
-   //                              <li>{dopWork.commentError}</li>
-   //                              <li>{dopWork.deadlines}</li>
-   //                              <li>{dopWork.delayTester}</li>
-   //                              <li>{dopWork.point}</li>
-   //                              <li>{dopWork.delayExecutor}</li>
-   //                              <li>{dopWork.departament}</li>
-   //                              <li><a href={dopWork.linkReport} target='_blank'>{dopWork.linkReport}</a></li>
-   //                          </ul> 
-   //                      </div>
-   //                  )
-   //              })} 
-   //              </div>
-   //          </div>  */}
-   //      </div>
-   //  )
 
 }
 
