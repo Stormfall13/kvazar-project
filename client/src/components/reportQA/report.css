@@ -1,0 +1,17 @@
+.wrapp__qa-main{
+    max-width: 1800px;
+    width: 100%;
+    margin: 0 auto;
+}
+.wrapp__qa{
+    overflow-x: scroll;
+    max-height: 215px;
+}
+.wrapp__qa ul{
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+}
+.wrapp__qa li{
+    margin: 0 10px 0 0;
+}

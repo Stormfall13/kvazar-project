@@ -18,7 +18,7 @@ import {
 import {
   randomArrayItem,
 } from '@mui/x-data-grid-generator';
-import { v4 as uuidv4 } from 'uuid';
+import ReportQA from '../reportQA/ReportQA';
 
 const roles = ['Market', 'Finance', 'Development'];
 const randomRole = () => {
@@ -345,33 +345,37 @@ const GlobalTable = () => {
 	 ];
  
 	 return (
-		 <Box
-			 sx={{
-			 height: 500,
-			 maxWidth: '1800px',
-			 margin: '0 auto',
-			 '& .actions': {
-				 color: 'text.secondary',
-			 },
-			 '& .textPrimary': {
-				 color: 'text.primary',
-			 },
-			 }}
-		 >
-			 <DataGrid
-			 rows={rows}
-			 columns={columns}
-			 getRowId={(row) => row.id}
-			 editMode="row"
-			 rowModesModel={rowModesModel}
-			 onRowModesModelChange={handleRowModesModelChange}
-			 onRowEditStop={handleRowEditStop}
-			 processRowUpdate={processRowUpdate}
-			 slotProps={{
-				 toolbar: { setRows, setRowModesModel },
-			 }}
-			 />
-		 </Box>
+		<>
+			<Box
+				sx={{
+				height: 500,
+				maxWidth: '1800px',
+				margin: '0 auto',
+				'& .actions': {
+					color: 'text.secondary',
+				},
+				'& .textPrimary': {
+					color: 'text.primary',
+				},
+				}}
+			>
+				<DataGrid
+				rows={rows}
+				columns={columns}
+				getRowId={(row) => row.id}
+				editMode="row"
+				rowModesModel={rowModesModel}
+				onRowModesModelChange={handleRowModesModelChange}
+				onRowEditStop={handleRowEditStop}
+				processRowUpdate={processRowUpdate}
+				slotProps={{
+					toolbar: { setRows, setRowModesModel },
+				}}
+				/>
+			</Box>
+			<ReportQA/>
+		 </>
+		 
 	 );
 	 
 
