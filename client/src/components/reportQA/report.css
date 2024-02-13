@@ -4,8 +4,12 @@
     margin: 0 auto;
 }
 .wrapp__qa{
-    overflow-x: scroll;
+    max-width: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
     max-height: 215px;
+    border: 2px solid rgba(255, 255, 255, 0.38);
+    padding: 0 0 0 10px;
 }
 .wrapp__qa ul{
     padding: 0;
