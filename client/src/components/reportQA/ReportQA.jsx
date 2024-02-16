@@ -16,12 +16,27 @@ const ReportQA = () => {
         .then(data => {
             const pointsByInspector = data.reduce((acc, currentValue) => {
                 const inspectorLowerCase = currentValue.inspector.toLowerCase();
-                // Используем преобразованное имя как ключ, но сохраняем оригинальное имя
-                if (!acc[inspectorLowerCase]) {
-                    acc[inspectorLowerCase] = { inspector: currentValue.inspector, point: 0 };
+                // Если это регламент, используем только имя инспектора как ключ
+                // Если это итерация, используем комбинацию имени инспектора и итерации, чтобы суммировать по ним баллы
+                const itemKey = currentValue.iteration
+                    ? `${inspectorLowerCase}-iteration-${currentValue.iteration}`
+                    : `${inspectorLowerCase}-reglament`;
+
+                // Создаем запись, если она еще не существует
+                if (!acc[itemKey]) {
+                    acc[itemKey] = {
+                        inspector: currentValue.inspector,
+                        points: currentValue.iteration ? 0 : currentValue.point, // Если это итерация, начинаем с 0
+                        onlyOnce: !currentValue.iteration // Метка для проверки, что регламент добавляется только один раз
+                    };
                 }
-                acc[inspectorLowerCase].point += currentValue.point;
-            
+
+                // Для итераций всегда добавляем баллы
+                if (currentValue.iteration) {
+                    acc[itemKey].points += currentValue.point;
+                }
+                // В случае если ключ регламента ещё не встречался, мы уже добавили его выше
+                
                 return acc;
             }, {});
             
@@ -39,10 +54,10 @@ const ReportQA = () => {
         <div className='wrapp__qa-main'>
             <h2>Баллы тестировщиков QA</h2>
             <div className="wrapp__qa">
-                {reglamentList && reglamentList.map(reglament => (
-                    <ul key={reglament.inspector}>
+                {reglamentList.length > 0 && reglamentList.map((reglament, index) => (
+                    <ul key={index}>
                         <li>{reglament.inspector}</li>
-                        <li>{reglament.point}</li>
+                        <li>{reglament.points}</li>
                     </ul>
                 ))}
             </div>

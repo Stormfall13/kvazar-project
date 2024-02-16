@@ -21,39 +21,73 @@ const AdWork = () => {
     const [commentError, setCommentError] = useState('');
     const [linkReport, setLinkReport] = useState('');
 
+    // Первая проверка + Типовая + 1-2 = 4
+    // Первая проверка + Типовая + 3-5 = 8
+    // Если 3-5 типовая умножить на 4
+    // useEffect(() => {
+    //     if(amount === "1-2"){
+    //         setPoint('4')
+    //     }
+    //     else if(amount === "3-5"){
+    //         setPoint('8')
+    //     }
+    //     else if(amount === "6 и более"){
+    //         setPoint('16')
+    //     }
+    // }, [amount]);
 
     useEffect(() => {
-        if(amount === "1-2"){
+        if(typeTest === "Итерация" && typeWork === "Типовая"){
+            setPoint('1')
+        }
+        else if(typeTest === "Итерация" && typeWork === "Не типовая"){
+            setPoint('6')
+        }
+        else if(typeTest === "Итерация" && typeWork === "Средняя"){
             setPoint('4')
-        }
-        else if(amount === "3-5"){
-            setPoint('8')
-        }
-        else if(amount === "6 и более"){
+        } 
+        // ####### //
+        else if (typeTest === 'Первая' && typeWork === "Не типовая"){
             setPoint('16')
         }
-    }, [amount]);
+        else if (typeTest === 'Первая' && typeWork === "Средняя"){
+            setPoint('8')
+        }
+        else if (typeTest === 'Первая' && typeWork === "Типовая"){
+            setPoint('4')
+        }
+    }, [amount, typeTest])
 
     useEffect(() => {
-        if(typeTest == "Итерация"){
+        if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "1-2"){
+            setPoint(16 * 1.5)
+        } 
+    }, [amount])
+
+    const cofFirst = 1.5
+    const confSec = 4
+    const confThird = 8
+
+    useEffect(() => {
+        if(typeTest === "Итерация"){
             setIteration("1")
         }
-        if(typeTest == "Первая"){
+        if(typeTest === "Первая"){
             setIteration("0")
         }
-        if(typeTest == "Наша ошибка"){
+        if(typeTest === "Наша ошибка"){
             setIteration("0")
         }
     }, [typeTest])
 
     useEffect(() => {
-        if(recommen == ''){
+        if(recommen === ''){
             setRecommen("0")
         }
-        if(errors == ''){
+        if(errors === ''){
             setErrors("0")
         }
-        if(critic == ''){
+        if(critic === ''){
             setCritic("0")
         }
     })
@@ -140,7 +174,7 @@ const AdWork = () => {
         .then(res => res.json())
         .then(response => {
             response.map(executorElem => {
-                if(event.target.value == executorElem.executorName){
+                if(event.target.value === executorElem.executorName){
                     setDepartament(executorElem.executorDepartament)
                 }
             })
@@ -232,7 +266,7 @@ const AdWork = () => {
                 <input value={inspector} onChange={(e) => setInspector(e.target.value)} className="main__input" type="text" list='Проверяющий' placeholder='Проверяющий'/>
                 <datalist id='Проверяющий'>
                     {executorList && executorList.map((executorElement, id) => {
-                        if(executorElement.executorDepartament == 'Тестировщик'){
+                        if(executorElement.executorDepartament === 'Тестировщик'){
                             return (
                                 <option key={id} value={executorElement.executorName}></option>
                             )
