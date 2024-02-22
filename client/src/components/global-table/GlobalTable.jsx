@@ -31,7 +31,11 @@ const GlobalTable = () => {
 	 const [rows, setRows] = React.useState([]);
 	 const [rowModesModel, setRowModesModel] = React.useState({});
 
-
+	 const sortRowsByCreatedAt = (rowArray) => {
+		return [...rowArray].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+	  };
+	  
+	
 	 useEffect(() => {
 		const fetchData = async () => {
 		  try {
@@ -42,9 +46,9 @@ const GlobalTable = () => {
 			  }
 			});
 			const data = await response.json();
-			// console.log(data);
-			// setRows(data.map((item) => ({ ...item, id: item.key || item.id })));
-			setRows(data.map((item, index) => ({ ...item, id: item.key || item.id || index })));
+			const sortedData = sortRowsByCreatedAt(data);
+			setRows(sortedData.map((item, index) => ({ ...item, id: item.key || item.id || index })));
+			
 		  } catch (error) {
 			console.error("Failed to fetch data: ", error);
 		  }

@@ -5,8 +5,8 @@ const AdWork = () => {
 
     const [reglament, setReglament] = useState('');
     const [executor, setExecutor] = useState('');
-    const [amount, setAmount] = useState('');
-    const [typeWork, setTypeWork] = useState('');
+    const [amount, setAmount] = useState('1-2');
+    const [typeWork, setTypeWork] = useState('Типовая');
     const [typeTest, setTypeTest] = useState('');
     const [recommen, setRecommen] = useState('');
     const [errors, setErrors] = useState('');
@@ -21,9 +21,6 @@ const AdWork = () => {
     const [commentError, setCommentError] = useState('');
     const [linkReport, setLinkReport] = useState('');
 
-    // Первая проверка + Типовая + 1-2 = 4
-    // Первая проверка + Типовая + 3-5 = 8
-    // Если 3-5 типовая умножить на 4
     // useEffect(() => {
     //     if(amount === "1-2"){
     //         setPoint('4')
@@ -59,14 +56,22 @@ const AdWork = () => {
     }, [amount, typeTest])
 
     useEffect(() => {
+        
+        const noType = 1.5
+        const mediumType = 4
+        const workType = 8
+
         if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "1-2"){
-            setPoint(16 * 1.5)
+            setPoint(16 * noType)
+        } 
+        else if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "3-5"){
+            setPoint(8 * mediumType)
+        } 
+        else if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "6 и более"){
+            setPoint(4 * workType)
         } 
     }, [amount])
 
-    const cofFirst = 1.5
-    const confSec = 4
-    const confThird = 8
 
     useEffect(() => {
         if(typeTest === "Итерация"){
