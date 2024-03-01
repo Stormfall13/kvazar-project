@@ -1,7 +1,6 @@
 const sequelize = require('../db')
 const { DataTypes } = require('sequelize')
 
-
 const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     email: {type: DataTypes.STRING, unique: true,},
@@ -31,7 +30,8 @@ const Dop = sequelize.define('dop_work_table', {
     pointsRemove: {type: DataTypes.INTEGER, defaultValue: 0},       // Снятые баллы
     dispute: {type: DataTypes.INTEGER, defaultValue: 0},            // Спор
     commentError: {type: DataTypes.STRING},                         // Комментарий ошибки
-    linkReport: {type: DataTypes.STRING}                            // ссылка для отчета
+    linkReport: {type: DataTypes.STRING},                           // ссылка для отчета
+    uniqueId: {type: DataTypes.STRING},                             // Уникальный ID uuid
 })
 
 const Executor = sequelize.define('executor_table', {

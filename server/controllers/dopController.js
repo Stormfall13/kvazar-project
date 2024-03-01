@@ -24,7 +24,8 @@ class DopController {
             pointsRemove,
             dispute,
             commentError,
-            linkReport
+            linkReport,
+            uniqueId
         } = req.body
         const dopWork = await Dop.create({
             date,
@@ -47,7 +48,8 @@ class DopController {
             pointsRemove,
             dispute,
             commentError,
-            linkReport
+            linkReport,
+            uniqueId
         })
         return res.json(dopWork)
     }

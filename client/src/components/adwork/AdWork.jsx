@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './adwork.css'
+import { v4 as uuidv4 } from 'uuid';
 
 const AdWork = () => {
 
@@ -20,18 +21,63 @@ const AdWork = () => {
     const [delayExecutor, setDelayExecutor] = useState('');
     const [commentError, setCommentError] = useState('');
     const [linkReport, setLinkReport] = useState('');
+    const [uniqueId, setUniqueId] = useState('');
+
+
+    // const [reportPeriods, setReportPeriods] = useState([]);
+
+    // const fetchReportPeriods = async () => {
+    //     try {
+    //       const response = await fetch('/reportPeriods.json'); // Укажите правильный путь к файлу
+    //       if (!response.ok) {
+    //         throw new Error('Network response was not ok');
+    //       }
+    //       const periods = await response.json();
+    //       setReportPeriods(periods);
+    //     } catch (error) {
+    //       console.error("Failed to fetch report periods: ", error);
+    //     }
+    //   };
+    
+    //   fetchReportPeriods();
 
     // useEffect(() => {
-    //     if(amount === "1-2"){
-    //         setPoint('4')
-    //     }
-    //     else if(amount === "3-5"){
-    //         setPoint('8')
-    //     }
-    //     else if(amount === "6 и более"){
-    //         setPoint('16')
-    //     }
-    // }, [amount]);
+    //     // Функция для получения периодов отчетности
+    //     const fetchReportPeriods = async () => {
+    //       try {
+    //         const response = await fetch('/reportPeriods.json'); // Укажите правильный путь к файлу
+    //         if (!response.ok) {
+    //           throw new Error('Network response was not ok');
+    //         }
+    //         const periods = await response.json();
+    //         setReportPeriods(periods);
+    //       } catch (error) {
+    //         console.error("Failed to fetch report periods: ", error);
+    //       }
+    //     };
+      
+    //     fetchReportPeriods();
+    //   }, []);
+      
+    //   // Функция возвращающая период отчетности для даты
+    //   const getReportPeriodForDate = (date) => {
+    //     return reportPeriods.find(period => 
+    //       new Date(date) >= new Date(period.startDate) &&
+    //       new Date(date) <= new Date(period.endDate)
+    //     );
+    //   };
+      
+    //   // Пример использования
+    //   const someDate = '2024-01-15';
+    //   const reportPeriod = getReportPeriodForDate(someDate);
+    //   if (reportPeriod) {
+    //     console.log(`This date belongs to the reporting period: ${reportPeriod.id}`);
+    //   }
+
+    useEffect(() => {
+        const randomKey = uuidv4();
+        setUniqueId(randomKey)
+    })
 
     useEffect(() => {
         if(typeTest === "Итерация" && typeWork === "Типовая"){
@@ -60,6 +106,13 @@ const AdWork = () => {
         const noType = 1.5
         const mediumType = 4
         const workType = 8
+        
+        const variant = {
+            noType: 1.5,
+            mediumType: 4,
+            workType: 8
+        }
+        
 
         if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "1-2"){
             setPoint(16 * noType)
@@ -100,11 +153,9 @@ const AdWork = () => {
     useEffect(() => {
         const reglamentInput = document.querySelector('.reglament')
         if(reglament.length > 0){
-            // console.log('+')
                 reglamentInput.style.border = '2px solid transparent'
         }
         if(reglament.length < 1){
-            // console.log('-')
                 reglamentInput.style.border = ''
         }
         const executorInput = document.querySelector('.executor')
@@ -165,6 +216,7 @@ const AdWork = () => {
         // "dispute": dispute,
         "commentError": commentError,
         "linkReport": linkReport,
+        "uniqueId": uniqueId,
     }
     
     const [executors, setExecutors] = useState([]);
