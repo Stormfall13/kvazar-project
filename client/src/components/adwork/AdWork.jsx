@@ -90,14 +90,14 @@ const AdWork = () => {
             setPoint('4')
         } 
         // ####### //
+        else if (typeTest === 'Первая' && typeWork === "Типовая"){
+            setPoint('4')
+        }
         else if (typeTest === 'Первая' && typeWork === "Не типовая"){
             setPoint('16')
         }
         else if (typeTest === 'Первая' && typeWork === "Средняя"){
             setPoint('8')
-        }
-        else if (typeTest === 'Первая' && typeWork === "Типовая"){
-            setPoint('4')
         }
     }, [amount, typeTest])
 
@@ -106,23 +106,54 @@ const AdWork = () => {
         const noType = 1.5
         const mediumType = 4
         const workType = 8
-        
-        const variant = {
-            noType: 1.5,
-            mediumType: 4,
-            workType: 8
-        }
-        
 
+        const amountArr = {
+            amountOne: '1-2',
+            amountSecond: '3-5',
+            amountThird: '6 и более'
+        }
+
+        // if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "1-2"){
+        //     setPoint(16 * noType)
+        // } 
+        // else if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "3-5"){
+        //     setPoint(8 * mediumType)
+        // } 
+        // else if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "6 и более"){
+        //     setPoint(4 * workType)
+        // } 
+
+        // 1-2
         if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "1-2"){
             setPoint(16 * noType)
+        } 
+        else if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "3-5"){
+            setPoint(16 * noType)
+        } 
+        else if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "6 и более"){
+            setPoint(16 * noType)
+        } 
+        // 3-5
+        else if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "1-2"){
+            setPoint(8 * mediumType)
         } 
         else if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "3-5"){
             setPoint(8 * mediumType)
         } 
+        else if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "6 и более"){
+            setPoint(8 * mediumType)
+        } 
+        // 6 и более
+        else if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "1-2"){
+            setPoint(4 * workType)
+        } 
+        else if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "3-5"){
+            setPoint(4 * workType)
+        } 
         else if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "6 и более"){
             setPoint(4 * workType)
         } 
+
     }, [amount])
 
 
