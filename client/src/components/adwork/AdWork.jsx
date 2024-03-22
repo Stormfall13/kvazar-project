@@ -23,7 +23,7 @@ const AdWork = () => {
     const [linkReport, setLinkReport] = useState('');
     const [uniqueId, setUniqueId] = useState('');
 
-
+    console.log(point);
     // const [reportPeriods, setReportPeriods] = useState([]);
 
     // const fetchReportPeriods = async () => {
@@ -77,7 +77,7 @@ const AdWork = () => {
     useEffect(() => {
         const randomKey = uuidv4();
         setUniqueId(randomKey)
-    })
+    }, [0])
 
     useEffect(() => {
         if(typeTest === "Итерация" && typeWork === "Типовая"){
@@ -101,62 +101,69 @@ const AdWork = () => {
         }
     }, [amount, typeTest])
 
-    useEffect(() => {
+    // useEffect(() => {
+
         
-        const noType = 1.5
-        const mediumType = 4
-        const workType = 8
+    //     const noType = 1.5
+    //     const mediumType = 4
+    //     const workType = 8
+        
+        
+    //     if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "1-2"){
+    //         setPoint(16 * noType)
+    //     } 
+    //     if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "3-5"){
+    //         setPoint(16 * mediumType)
+    //     } 
+    //     if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "6 и более"){
+    //         setPoint(16 * workType)
+    //     } 
+        
+    //     if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "1-2"){
+    //         setPoint(8 * noType)
+    //     } 
+    //     if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "3-5"){
+    //         setPoint(8 * mediumType)
+    //     } 
+    //     if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "6 и более"){
+    //         setPoint(8 * workType)
+    //     } 
+        
+    //     if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "1-2"){
+    //         setPoint(4 * noType)
+    //     } 
+    //     if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "3-5"){
+    //         setPoint(4 * mediumType)
+    //     }
+    //     if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "6 и более"){
+    //         setPoint(4 * workType)
+    //     }
+        
 
-        const amountArr = {
-            amountOne: '1-2',
-            amountSecond: '3-5',
-            amountThird: '6 и более'
+    // })
+
+    useEffect(() => {
+        const typeMultipliers = {
+            'Не типовая': 16,
+            'Средняя': 8,
+            'Типовая': 4,
+        };
+    
+        const amountMultipliers = {
+            '1-2': 1.5,
+            '3-5': 4,
+            '6 и более': 8,
+        };
+    
+        if (typeTest === 'Первая' && typeWork in typeMultipliers && amount in amountMultipliers) {
+            const basePoints = typeMultipliers[typeWork];
+            const multiplier = amountMultipliers[amount];
+            setPoint(basePoints * multiplier);
         }
+    
 
-        // if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "1-2"){
-        //     setPoint(16 * noType)
-        // } 
-        // else if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "3-5"){
-        //     setPoint(8 * mediumType)
-        // } 
-        // else if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "6 и более"){
-        //     setPoint(4 * workType)
-        // } 
-
-        // 1-2
-        if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "1-2"){
-            setPoint(16 * noType)
-        } 
-        else if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "3-5"){
-            setPoint(16 * noType)
-        } 
-        else if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "6 и более"){
-            setPoint(16 * noType)
-        } 
-        // 3-5
-        else if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "1-2"){
-            setPoint(8 * mediumType)
-        } 
-        else if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "3-5"){
-            setPoint(8 * mediumType)
-        } 
-        else if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "6 и более"){
-            setPoint(8 * mediumType)
-        } 
-        // 6 и более
-        else if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "1-2"){
-            setPoint(4 * workType)
-        } 
-        else if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "3-5"){
-            setPoint(4 * workType)
-        } 
-        else if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "6 и более"){
-            setPoint(4 * workType)
-        } 
-
-    }, [amount])
-
-
+    }, [typeTest, typeWork, amount, setPoint]);
+    
     useEffect(() => {
         if(typeTest === "Итерация"){
             setIteration("1")
@@ -313,7 +320,7 @@ const AdWork = () => {
             .then((response) => response.json())
             .then((data) => {
             // Обработка ответа от сервера
-            console.log(data);
+            // console.log(data);
             })
             .catch((error) => {
             // Обработка ошибки
