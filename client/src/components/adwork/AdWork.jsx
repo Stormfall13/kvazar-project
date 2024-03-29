@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import './adwork.css'
 import { v4 as uuidv4 } from 'uuid';
 
+
 const AdWork = () => {
 
     const [reglament, setReglament] = useState('');
@@ -9,9 +10,9 @@ const AdWork = () => {
     const [amount, setAmount] = useState('1-2');
     const [typeWork, setTypeWork] = useState('Типовая');
     const [typeTest, setTypeTest] = useState('');
-    const [recommen, setRecommen] = useState('');
-    const [errors, setErrors] = useState('');
-    const [critic, setCritic] = useState('');
+    const [recommen, setRecommen] = useState('0');
+    const [errors, setErrors] = useState('0');
+    const [critic, setCritic] = useState('0');
     const [counting, setCounting] = useState('');
     const [iteration, setIteration] = useState('');
     const [point, setPoint] = useState('');
@@ -23,7 +24,6 @@ const AdWork = () => {
     const [linkReport, setLinkReport] = useState('');
     const [uniqueId, setUniqueId] = useState('');
 
-    console.log(point);
     // const [reportPeriods, setReportPeriods] = useState([]);
 
     // const fetchReportPeriods = async () => {
@@ -79,91 +79,55 @@ const AdWork = () => {
         setUniqueId(randomKey)
     }, [0])
 
-    useEffect(() => {
-        if(typeTest === "Итерация" && typeWork === "Типовая"){
-            setPoint('1')
-        }
-        else if(typeTest === "Итерация" && typeWork === "Не типовая"){
-            setPoint('6')
-        }
-        else if(typeTest === "Итерация" && typeWork === "Средняя"){
-            setPoint('4')
-        } 
-        // ####### //
-        else if (typeTest === 'Первая' && typeWork === "Типовая"){
-            setPoint('4')
-        }
-        else if (typeTest === 'Первая' && typeWork === "Не типовая"){
-            setPoint('16')
-        }
-        else if (typeTest === 'Первая' && typeWork === "Средняя"){
-            setPoint('8')
-        }
-    }, [amount, typeTest])
 
-    // useEffect(() => {
-
-        
-    //     const noType = 1.5
-    //     const mediumType = 4
-    //     const workType = 8
-        
-        
-    //     if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "1-2"){
-    //         setPoint(16 * noType)
-    //     } 
-    //     if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "3-5"){
-    //         setPoint(16 * mediumType)
-    //     } 
-    //     if (typeTest === 'Первая' && typeWork === "Не типовая" && amount === "6 и более"){
-    //         setPoint(16 * workType)
-    //     } 
-        
-    //     if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "1-2"){
-    //         setPoint(8 * noType)
-    //     } 
-    //     if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "3-5"){
-    //         setPoint(8 * mediumType)
-    //     } 
-    //     if (typeTest === 'Первая' && typeWork === "Средняя" && amount === "6 и более"){
-    //         setPoint(8 * workType)
-    //     } 
-        
-    //     if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "1-2"){
-    //         setPoint(4 * noType)
-    //     } 
-    //     if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "3-5"){
-    //         setPoint(4 * mediumType)
-    //     }
-    //     if (typeTest === 'Первая' && typeWork === "Типовая" && amount === "6 и более"){
-    //         setPoint(4 * workType)
-    //     }
-        
-
-    // })
 
     useEffect(() => {
+        
         const typeMultipliers = {
             'Не типовая': 16,
             'Средняя': 8,
             'Типовая': 4,
         };
+        
     
         const amountMultipliers = {
             '1-2': 1.5,
             '3-5': 4,
             '6 и более': 8,
         };
-    
+
         if (typeTest === 'Первая' && typeWork in typeMultipliers && amount in amountMultipliers) {
             const basePoints = typeMultipliers[typeWork];
             const multiplier = amountMultipliers[amount];
             setPoint(basePoints * multiplier);
         }
+
+        const bTypeMultipliers = {
+            'Не типовая': 6,
+            'Средняя': 4,
+            'Типовая': 1,
+        };
+        
     
+        const bAmountMultipliers = {
+            '1-2': 1.5,
+            '3-5': 4,
+            '6 и более': 8,
+        };
+
+
+        if (typeTest === 'Итерация' && typeWork in bTypeMultipliers && amount in bAmountMultipliers) {
+            const basePoints = bTypeMultipliers[typeWork];
+            const multiplier = bAmountMultipliers[amount];
+            setPoint(basePoints * multiplier);
+            
+        }
+
 
     }, [typeTest, typeWork, amount, setPoint]);
-    
+
+    console.log(point);
+
     useEffect(() => {
         if(typeTest === "Итерация"){
             setIteration("1")
@@ -175,18 +139,6 @@ const AdWork = () => {
             setIteration("0")
         }
     }, [typeTest])
-
-    useEffect(() => {
-        if(recommen === ''){
-            setRecommen("0")
-        }
-        if(errors === ''){
-            setErrors("0")
-        }
-        if(critic === ''){
-            setCritic("0")
-        }
-    })
 
     useEffect(() => {
         const reglamentInput = document.querySelector('.reglament')
