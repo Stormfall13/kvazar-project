@@ -22,7 +22,7 @@ const Dop = sequelize.define('dop_work_table', {
     critic: {type: DataTypes.INTEGER, defaultValue: 0},             // Критические ошибки
     counting: {type: DataTypes.STRING},                             // Отчет
     iteration: {type: DataTypes.INTEGER, defaultValue: 0},          // Итерации
-    point: {type: DataTypes.FLOAT},                               // Баллы
+    point: {type: DataTypes.FLOAT},                                 // Баллы
     inspector: {type: DataTypes.STRING},                            // Проверяющий
     departament: {type: DataTypes.STRING},                          // Отдел
     delayTester: {type: DataTypes.STRING},                          // Просрочка тестировщика

@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import './adwork.css'
 import { v4 as uuidv4 } from 'uuid';
+
+import closeImg from '../../assets/close.svg';
+import './adwork.css'
 
 
 const AdWork = () => {
@@ -82,19 +84,24 @@ const AdWork = () => {
 
 
     useEffect(() => {
+
+        // КОЭФФИЦЕНТЫ
+
+        const amountMultipliers = {
+            '1-2': 1.5,
+            '3-5': 4,
+            '6 и более': 8,
+        };
+
         
+        // Первая проверка
+
         const typeMultipliers = {
             'Не типовая': 16,
             'Средняя': 8,
             'Типовая': 4,
         };
         
-    
-        const amountMultipliers = {
-            '1-2': 1.5,
-            '3-5': 4,
-            '6 и более': 8,
-        };
 
         if (typeTest === 'Первая' && typeWork in typeMultipliers && amount in amountMultipliers) {
             const basePoints = typeMultipliers[typeWork];
@@ -102,23 +109,38 @@ const AdWork = () => {
             setPoint(basePoints * multiplier);
         }
 
+        // ###################### //
+
+        // Итерация 
+
         const bTypeMultipliers = {
             'Не типовая': 6,
             'Средняя': 4,
             'Типовая': 1,
         };
-        
-    
-        const bAmountMultipliers = {
-            '1-2': 1.5,
-            '3-5': 4,
-            '6 и более': 8,
+
+
+        if (typeTest === 'Итерация' && typeWork in bTypeMultipliers && amount in amountMultipliers) {
+            const basePoints = bTypeMultipliers[typeWork];
+            const multiplier = amountMultipliers[amount];
+            setPoint(basePoints * multiplier);
+            
+        }
+
+        // ###################### //
+
+        // Наша ошибка
+
+        const cTypeMultipliers = {
+            'Не типовая': 1,
+            'Средняя': 1,
+            'Типовая': 1,
         };
 
 
-        if (typeTest === 'Итерация' && typeWork in bTypeMultipliers && amount in bAmountMultipliers) {
-            const basePoints = bTypeMultipliers[typeWork];
-            const multiplier = bAmountMultipliers[amount];
+        if (typeTest === 'Наша ошибка' && typeWork in cTypeMultipliers && amount in amountMultipliers) {
+            const basePoints = cTypeMultipliers[typeWork];
+            const multiplier = amountMultipliers[amount];
             setPoint(basePoints * multiplier);
             
         }
@@ -141,51 +163,51 @@ const AdWork = () => {
     }, [typeTest])
 
     useEffect(() => {
+        
+        const btnClear = document.querySelector('.btn__clear')
+        if(executor.length > 1){
+            btnClear.style.display= 'inline-block'
+        } else {
+            btnClear.style.background = ''
+        }
+        // ##############
         const reglamentInput = document.querySelector('.reglament')
-        if(reglament.length > 0){
-                reglamentInput.style.border = '2px solid transparent'
+        if(reglament.length > 0 ){
+                reglamentInput.style.border = '1px solid #bbb6b6'
+        }else{
+            reglamentInput.style.border = ''
         }
-        if(reglament.length < 1){
-                reglamentInput.style.border = ''
-        }
+        // ##############
         const executorInput = document.querySelector('.executor')
-        if(executor.length > 0){
-                executorInput.style.border = '2px solid transparent'
+        if(executor.length > 0 ){
+            executorInput.style.border = '1px solid #bbb6b6'
+        }else{
+            executorInput.style.border = ''
         }
-        if(executor.length < 1){
-                executorInput.style.border = ''
-        }
+        // ##############
         const typeWorkInput = document.querySelector('.type__work')
-        if(typeWork.length > 0){
-                typeWorkInput.style.border = '2px solid transparent'
+        if(typeWork.length > 0 ){
+            typeWorkInput.style.border = '1px solid #bbb6b6'
+        }else{
+            typeWorkInput.style.border = ''
         }
-        if(typeWork.length < 1){
-                typeWorkInput.style.border = ''
-        }
+        // ##############
         const amountInput = document.querySelector('.amount')
-        if(amount.length > 0){
-            amountInput.style.border = '2px solid transparent'
+        if(amount.length > 0 ){
+            amountInput.style.border = '1px solid #bbb6b6'
+        }else{
+            amountInput.style.border = ''
         }
-        if(amount.length < 1){
-                amountInput.style.border = ''
-        }
+        // ##############
         const typeTestInput = document.querySelector('.type__test')
-        if(typeTest.length > 0){
-            typeTestInput.style.border = '2px solid transparent'
-        }
-        if(typeTest.length < 1){
-                typeTestInput.style.border = ''
-        }
-        const countingInput = document.querySelector('.counting')
-        if(counting.length > 0){
-            countingInput.style.border = '1px solid #bbb6b6'
-        }
-        if(counting.length < 1){
-                countingInput.style.border = ''
+        if(typeTest.length > 0 ){
+            typeTestInput.style.border = '1px solid #bbb6b6'
+        }else{
+            typeTestInput.style.border = ''
         }
     })
 
-
+    // || executor.length > 0 || typeWork.length > 0 || amount.length > 0 || typeTest.length > 0
     const item = {
         "reglament": reglament,
         "executor": executor,
@@ -301,55 +323,80 @@ const AdWork = () => {
         // setLinkReport('');
     };
 
-
+    function clearExecutor(){
+        setExecutor('')
+        const btnClear = document.querySelector('.btn__clear')
+        btnClear.style.display = ''
+    }
 
     return (
         <div className="ad__container">
             <h1>Доп. Работы</h1>
             <form onSubmit={handleSubmit} className="form__global">
                 {/* ################## */}
-                <input required value={reglament} onChange={(e) => setReglament(e.target.value)} className="main__input required reglament" type="text" placeholder='Ссылка на регламент'/>
+                <div className="point__work">
+                    <span className='options__work'>Ссылка на регламент</span>
+                    <input required value={reglament} onChange={(e) => setReglament(e.target.value)} className="reglament" type="text"/>
+                </div>
                 {/* ################## */}
-                <input value={inspector} onChange={(e) => setInspector(e.target.value)} className="main__input" type="text" list='Проверяющий' placeholder='Проверяющий'/>
-                <datalist id='Проверяющий'>
-                    {executorList && executorList.map((executorElement, id) => {
-                        if(executorElement.executorDepartament === 'Тестировщик'){
+                <div className="point__work">
+                    <span className='options__work'>Проверяющий</span>
+                    <input value={inspector} onChange={(e) => setInspector(e.target.value)} className="main__input" type="text" list='Проверяющий'/>
+                    <datalist id='Проверяющий'>
+                        {executorList && executorList.map((executorElement, id) => {
+                            if(executorElement.executorDepartament === 'Тестировщик'){
+                                return (
+                                    <option key={id} value={executorElement.executorName}></option>
+                                )
+                            }
+                        })}
+                    </datalist> 
+                </div>
+                {/* ################## */}
+                <div className="point__work">
+                    <span className="options__work">Исполнители</span>
+                    <span className="btn__clear" onClick={clearExecutor}>
+                        <img src={closeImg} alt="" />
+                    </span>
+                    <input required value={executor} onChange={handleChange} className='executor' type="text" list='Исполнители'/>
+                    <datalist id='Исполнители'>
+                        {executorList && executorList.map((executorElement, id) => {
                             return (
                                 <option key={id} value={executorElement.executorName}></option>
                             )
-                        }
-                    })}
-                </datalist>
+                        })}
+                    </datalist> 
+                </div>
                 {/* ################## */}
-                <input required value={executor} onChange={handleChange} className="main__input required executor" type="text" list='Исполнители' placeholder='Исполнители'/>
-                <datalist id='Исполнители'>
-                    {executorList && executorList.map((executorElement, id) => {
-                        return (
-                            <option key={id} value={executorElement.executorName}></option>
-                        )
-                    })}
-                </datalist>
+                <div className="point__work">
+                    <span className="options__work">Вид работ</span>
+                    <input className='type__work' required type="text" list='ВидРабот' value={typeWork} onChange={(e) => setTypeWork(e.target.value)}/>
+                    <datalist id='ВидРабот'>
+                        <option value="Типовая"></option>
+                        <option value="Не типовая"></option>
+                        <option value="Средняя"></option>
+                    </datalist> 
+                </div>
                 {/* ################## */}
-                <input className='type__work' placeholder='Вид работ' required type="text" list='ВидРабот' value={typeWork} onChange={(e) => setTypeWork(e.target.value)}/>
-                <datalist id='ВидРабот'>
-                    <option value="Типовая"></option>
-                    <option value="Не типовая"></option>
-                    <option value="Средняя"></option>
-                </datalist> 
+                <div className="point__work">
+                    <span className="options__work">Кол-во работ в рег-те</span>
+                    <input className='amount' required type="text" list='КоличествоРабот' value={amount} onChange={(e) => setAmount(e.target.value)}/>
+                    <datalist id='КоличествоРабот'>
+                        <option value="1-2"></option>
+                        <option value="3-5"></option>
+                        <option value="6 и более"></option>
+                    </datalist>
+                </div>
                 {/* ################## */}
-                <input className='amount' placeholder='Кол-во работ в рег-те' required type="text" list='КоличествоРабот' value={amount} onChange={(e) => setAmount(e.target.value)}/>
-                <datalist id='КоличествоРабот'>
-                    <option value="1-2"></option>
-                    <option value="3-5"></option>
-                    <option value="6 и более"></option>
-                </datalist>
-                {/* ################## */}
-                <input className='type__test' placeholder='Вид проверки' required type="text" list='ВидПроверки' value={typeTest} onChange={(e) => setTypeTest(e.target.value)}/>
-                <datalist id='ВидПроверки'>
-                    <option value="Первая"></option>
-                    <option value="Итерация"></option>
-                    <option value="Наша ошибка"></option>
-                </datalist>   
+                <div className="point__work">
+                        <span className="options__work">Вид проверки</span>
+                        <input className='type__test' required type="text" list='ВидПроверки' value={typeTest} onChange={(e) => setTypeTest(e.target.value)}/>
+                    <datalist id='ВидПроверки'>
+                        <option value="Первая"></option>
+                        <option value="Итерация"></option>
+                        <option value="Наша ошибка"></option>
+                    </datalist>  
+                </div>  
                 {/* ################## */}
                 <div className="point__work">
                     <span className="options__work">Рекомендации</span>
@@ -377,17 +424,23 @@ const AdWork = () => {
                     <textarea className='counting' required type="text" value={counting} onChange={(e) => setCounting(e.target.value)} placeholder="Мой ответ" />
                 </div>
                 {/* ################## */}
-                <input placeholder='Просрочка тестировщика' type="text" list='ПросрочкаТестировщика' value={delayTester} onChange={(e) => setDelayTester(e.target.value)}/>
-                <datalist id='ПросрочкаТестировщика'>
-                    <option value="Внутренняя"></option>
-                    <option value="Внешняя"></option>
-                </datalist>
+                <div className="point__work">
+                    <span className="options__work">Просрочка исполнителя</span>
+                    <input className='main__input' type="text" list='ПросрочкаИсполнителя' value={delayExecutor} onChange={(e) => setDelayExecutor(e.target.value)}/>
+                    <datalist id='ПросрочкаИсполнителя'>
+                        <option value="Внутренняя"></option>
+                        <option value="Внешняя"></option>
+                    </datalist> 
+                </div>
                 {/* ################## */}
-                <input placeholder='Просрочка исполнителя' type="text" list='ПросрочкаИсполнителя' value={delayExecutor} onChange={(e) => setDelayExecutor(e.target.value)}/>
-                <datalist id='ПросрочкаИсполнителя'>
-                    <option value="Внутренняя"></option>
-                    <option value="Внешняя"></option>
-                </datalist>
+                <div className="point__work">
+                    <span className="options__work">Просрочка тестировщика</span>
+                    <input className='main__input' type="text" list='ПросрочкаТестировщика' value={delayTester} onChange={(e) => setDelayTester(e.target.value)}/>
+                    <datalist id='ПросрочкаТестировщика'>
+                        <option value="Внутренняя"></option>
+                        <option value="Внешняя"></option>
+                    </datalist> 
+                </div>
                 {/* ################## */}
                 <button type="submit" className="btn__main">Отправить</button>
             </form>

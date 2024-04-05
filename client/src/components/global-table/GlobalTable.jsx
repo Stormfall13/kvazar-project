@@ -69,6 +69,7 @@ const GlobalTable = () => {
 		  } catch (error) {
 			console.error("Failed to fetch data: ", error);
 		  }
+
 		};
 	  
 		fetchData();
@@ -91,13 +92,18 @@ const GlobalTable = () => {
 		setRowModesModel((prev) => ({ ...prev, [id]: { mode: GridRowModes.View } }));
 		
 		const row = rows.find((r) => r.id === id);
-		console.log(row);
-
+		// console.log(row);
+		
 		// const updateData = { ...row };
 		// console.log(updateData);
+		
 
 
 		try {
+
+			// console.log('Saving row with id:', id);
+			// console.log('Data to be sent:', row);
+
 			const response = await fetch(`http://localhost:5000/api/dop-work/${id}`, {
 				method: 'PUT',
 				headers: {
@@ -144,11 +150,11 @@ const GlobalTable = () => {
 	//  };
 	const processRowUpdate = (newRow) => {
 		const updatedRow = { ...newRow };
-		
+		// console.log(updatedRow);
 		setRows(currentRows => {
 		  return currentRows.map(row => row.id === newRow.id ? updatedRow : row);
 		});
-	  
+
 		return newRow;
 	  };
  
@@ -359,6 +365,7 @@ const GlobalTable = () => {
 			cellClassName: 'actions',
 			getActions: ({ id }) => {
 			  const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+			  
 	  
 			  if (isInEditMode) {
 				return [
