@@ -48,7 +48,7 @@ const GlobalTable = () => {
 
 	 const [rows, setRows] = React.useState([]);
 	 const [rowModesModel, setRowModesModel] = React.useState({});
-
+	 console.log(rows.id);
 	 const sortRowsByCreatedAt = (rowArray) => {
 		return [...rowArray].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 	  };
@@ -84,15 +84,15 @@ const GlobalTable = () => {
 	 const handleEditClick = (id) => () => {
 		 setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
 		 console.log(id);
+		 
 	 };
-
 	 
  
 	 const handleSaveClick = (id) => async () => {
 		setRowModesModel((prev) => ({ ...prev, [id]: { mode: GridRowModes.View } }));
 		
 		const row = rows.find((r) => r.id === id);
-		// console.log(row);
+		console.log(row);
 		
 		// const updateData = { ...row };
 		// console.log(updateData);
@@ -111,11 +111,12 @@ const GlobalTable = () => {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(row),
+				
 			});
 			if (!response.ok) {
 				throw new Error('Something went wrong while saving');
 			}
-	
+			console.log(row)
 			
 			const updatedRow = await response.json();
 			setRows((prev) => prev.map((row) => (row.id === id ? updatedRow : row)));

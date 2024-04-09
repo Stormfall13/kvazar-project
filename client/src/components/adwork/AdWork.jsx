@@ -82,7 +82,6 @@ const AdWork = () => {
     }, [0])
 
 
-
     useEffect(() => {
 
         // КОЭФФИЦЕНТЫ
@@ -131,20 +130,9 @@ const AdWork = () => {
 
         // Наша ошибка
 
-        const cTypeMultipliers = {
-            'Не типовая': 1,
-            'Средняя': 1,
-            'Типовая': 1,
-        };
-
-
-        if (typeTest === 'Наша ошибка' && typeWork in cTypeMultipliers && amount in amountMultipliers) {
-            const basePoints = cTypeMultipliers[typeWork];
-            const multiplier = amountMultipliers[amount];
-            setPoint(basePoints * multiplier);
-            
+        if (typeTest === 'Наша ошибка') {
+            setPoint(1);
         }
-
 
     }, [typeTest, typeWork, amount, setPoint]);
 
