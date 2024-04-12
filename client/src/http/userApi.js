@@ -13,6 +13,7 @@ export const login = async (email, password) => {
     const {data} = await $host.post('api/user/login', {email, password})
     console.log("Login data:", data)
     localStorage.setItem('token', data.token)
+    console.log(data.token);
     return jwtDecode(data.token)
 }
 
@@ -24,6 +25,5 @@ export const check = async () => {
     } catch (error) {
         console.log(error)
     }
-    
-    
 }
+

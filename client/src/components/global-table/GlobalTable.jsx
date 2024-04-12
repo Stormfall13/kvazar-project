@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './globalTable.css'
 
 import Box from '@mui/material/Box';
@@ -21,6 +21,7 @@ import {
   randomArrayItem,
 } from '@mui/x-data-grid-generator';
 import ReportQA from '../reportQA/ReportQA';
+import NavBar from '../navbar/NavBar';
 
 const roles = ['Market', 'Finance', 'Development'];
 const randomRole = () => {
@@ -48,7 +49,7 @@ const GlobalTable = () => {
 
 	 const [rows, setRows] = React.useState([]);
 	 const [rowModesModel, setRowModesModel] = React.useState({});
-	 console.log(rows.id);
+
 	 const sortRowsByCreatedAt = (rowArray) => {
 		return [...rowArray].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 	  };
@@ -75,6 +76,7 @@ const GlobalTable = () => {
 		fetchData();
 	  }, []);
 
+
 	 const handleRowEditStop = (params, event) => {
 		 if (params.reason === GridRowEditStopReasons.rowFocusOut) {
 			 event.defaultMuiPrevented = true;
@@ -93,6 +95,7 @@ const GlobalTable = () => {
 		
 		const row = rows.find((r) => r.id === id);
 		console.log(row);
+		
 		
 		// const updateData = { ...row };
 		// console.log(updateData);
