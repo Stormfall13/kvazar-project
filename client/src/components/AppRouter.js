@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 // import { Switch, Route, Redirect } from 'react-router-dom';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { authRoutes, publicRoutes } from '../routes';
-import { ADMIN_ROUTE, LOGIN_ROUTE, MAIN_PAGE, MAIN_ROUTE, TABLE_ROUTE } from '../utils/consts';
+import { ADMIN_ROUTE, LOGIN_ROUTE, MAIN_PAGE, MAIN_ROUTE, NOTREG_ROUTE, TABLE_ROUTE } from '../utils/consts';
 import { Context } from '../index';
 
 import {observer} from "mobx-react-lite";
@@ -36,13 +36,13 @@ const AppRouter = observer(() => {
     return (
         <Routes>
             {user.isAuth && authRoutes.map(({ path, Component }) =>
-                <Route key={path} path={path} element={<Component />} />
+                <Route key={path} path={path} component={Component} exact/>
             )}
             {publicRoutes.map(({ path, Component }) =>
-                <Route key={path} path={path} element={<Component />} />
+                <Route key={path} path={path} component={Component} exact/>
             )}
             {/* <Route path="*" element={<Navigate to={MAIN_ROUTE} replace />} /> */}
-            <Route path="*" element={user.isAuth ? <Navigate to={MAIN_ROUTE} replace /> : <Navigate to={LOGIN_ROUTE} replace />} />
+            <Route path="*" element={user.isAuth ? <Navigate to={MAIN_ROUTE} replace /> : <Navigate to={NOTREG_ROUTE} replace />} />
         </Routes>
     );
 });

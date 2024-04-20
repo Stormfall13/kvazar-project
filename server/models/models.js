@@ -41,6 +41,7 @@ const Executor = sequelize.define('executor_table', {
 })
 
 
+
 module.exports = {
     Dop,
     Executor,

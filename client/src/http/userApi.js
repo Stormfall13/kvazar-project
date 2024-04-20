@@ -27,3 +27,11 @@ export const check = async () => {
     }
 }
 
+export const logOut = async () => {
+    try {
+        const {data} = await $host.post('api/user/logout')
+        localStorage.removeItem('token', data.token)
+    } catch (error) {
+        console.log(error)
+    }
+}

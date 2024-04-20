@@ -15,6 +15,8 @@ import { Context } from "./index";
 import React, { useEffect, useState, useContext } from "react";
 import { check } from "./http/userApi";
 import Menu from "./components/menu/Menu";
+import Auth from "./pages/Auth";
+import MainPage from "./pages/MainPage";
 
 const App = observer(() => {
   const { user } = useContext(Context);
@@ -44,6 +46,7 @@ const App = observer(() => {
       .then((data) => {
         user.setUser(true);
         user.setIsAuth(true);
+        // console.log(data);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -57,10 +60,14 @@ const App = observer(() => {
       <div className="App">
         <button onClick={changeBackground}>Темная тема</button>
         <Link to="/" >Главная</Link>
+        <NavBar />
         <AppRouter />
         <Background />
-        <NavBar />
-        {/* <Routes> */}
+        <Routes>
+          <Route path="/login" element={<Auth/>} />
+          <Route path="/registration" element={<Auth/>} />
+          <Route path="/adwork" element={<AdWork/>} />
+          <Route path="/" element={<MainPage/>} />
           {/* <Route path='admin' element={<AppRouter/>}/> */}
           {/* <Route path="/" element={<Main />} />
           <Route path="/adwork" element={<AdWork />} />
@@ -70,7 +77,7 @@ const App = observer(() => {
           <Route path="/techsupport" element={<TechSupport />} />
           <Route path="/globalTable" element={<GlobalTable />} /> */}
           {/* <Route path='*' element={<NotFound />} /> */}
-        {/* </Routes> */}
+        </Routes>
       </div>
     </BrowserRouter>
   );

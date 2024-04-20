@@ -136,7 +136,7 @@ const AdWork = () => {
 
     }, [typeTest, typeWork, amount, setPoint]);
 
-    console.log(point);
+    // console.log(point);
 
     useEffect(() => {
         if(typeTest === "Итерация"){

@@ -1,10 +1,11 @@
 import Admin from './pages/Admin';
 import Auth from './pages/Auth';
 import Main from './components/main/Main';
-import {  LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, ADMIN_ROUTE, ADWORK_ROUTE, MAIN_PAGE, TABLE_ROUTE } from './utils/consts';
+import {  LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, ADMIN_ROUTE, ADWORK_ROUTE, MAIN_PAGE, TABLE_ROUTE, NOTREG_ROUTE } from './utils/consts';
 import AdWork from './components/adwork/AdWork';
 import MainPage from './pages/MainPage';
 import GlobalTable from './components/global-table/GlobalTable';
+import NotRegPage from './pages/NotRegPage';
 
 export const authRoutes = [
     {
@@ -15,10 +16,10 @@ export const authRoutes = [
     //     path: MAIN_ROUTE,
     //     Component: Main
     // },
-    // {
-    //     path: ADWORK_ROUTE,
-    //     Component: AdWork
-    // },
+    {
+        path: ADWORK_ROUTE,
+        Component: AdWork
+    },
     // {
     //     path: MAIN_PAGE,
     //     Component: MainPage
@@ -26,7 +27,11 @@ export const authRoutes = [
     // {
     //     path: TABLE_ROUTE,
     //     Component: GlobalTable
-    // }
+    // },
+    {
+        path: MAIN_ROUTE,
+        Component: MainPage
+    },
 ]
 
 export const publicRoutes = [
@@ -39,7 +44,7 @@ export const publicRoutes = [
         Component: Auth
     },
     {
-        path: MAIN_ROUTE,
-        Component: MainPage
+        path: NOTREG_ROUTE,
+        Component: NotRegPage
     },
 ]

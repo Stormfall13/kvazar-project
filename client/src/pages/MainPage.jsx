@@ -1,14 +1,12 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import { LOGIN_ROUTE } from '../utils/consts';
+import React from 'react';
+import Menu from '../components/menu/Menu';
+import AuthRegBtn from '../components/AuthRegBtn/AuthRegBtn';
 
 const MainPage = () => {
 
-  const navigate = useNavigate();
-
   return (
     <div>
-      <button onClick={() => navigate(LOGIN_ROUTE)}>Авторизация/Регистрация</button>
+      <Menu/>
     </div>
   )
 }
