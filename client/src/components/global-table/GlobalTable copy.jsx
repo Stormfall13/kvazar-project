@@ -47,12 +47,19 @@ const myLocaleText = {
 
 const GlobalTable = () => {
 
-	const [ currentId , setCurrentId ] = useState('');
+
+  // const handleEditClick = (id) => {
+  //   setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  //   // document.querySelector('.id__input').value = rows.id
+  //   console.log(id);
+  // };
+
 
 	const handleEditClick = (id) => {
 		console.log(id);
-		setCurrentId(id);
 	};
+
+
 
 	 const [rows, setRows] = React.useState([]);
 	 const [rowModesModel, setRowModesModel] = React.useState({});
@@ -62,23 +69,24 @@ const GlobalTable = () => {
 	  };
 	
 
-	const fetchData = async () => {
-		try {
-		  const response = await fetch('http://localhost:5000/api/dop-work', {
-			method: "GET",
-			headers: {
-			  "Accept": "application/json"
-			}
-		  });
-		  const data = await response.json();
-		  const sortedData = sortRowsByCreatedAt(data);
-		  setRows(sortedData.map((item, index) => ({ ...item, id: item.key || item.id || index })));
-		} catch (error) {
-		  console.error("Failed to fetch data: ", error);
-		}
-	  };
-	
-	  useEffect(() => {
+	 useEffect(() => {
+		const fetchData = async () => {
+		  try {
+			const response = await fetch('http://localhost:5000/api/dop-work', {
+			  method: "GET",
+			  headers: {
+				"Accept": "application/json"
+			  }
+			});
+			const data = await response.json();
+			const sortedData = sortRowsByCreatedAt(data);
+			setRows(sortedData.map((item, index) => ({ ...item, id: item.key || item.id || index })));
+		  } catch (error) {
+			console.error("Failed to fetch data: ", error);
+		  }
+
+		};
+	  
 		fetchData();
 	  }, []);
 
@@ -89,11 +97,64 @@ const GlobalTable = () => {
 		 }
 	 };
  
+	//  const handleEditClick = (id) => () => {
+	// 	 setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+	// 	 console.log(id);
+	//  };
+
+	//  const handleSaveClick = (id) => async () => {
+	// 	setRowModesModel((prev) => ({ ...prev, [id]: { mode: GridRowModes.View } }));
+		
+	// 	const row = rows.find((r) => r.id === id);
+	// 	console.log(row);
+
+	// 	try {
+
+	// 		const response = await fetch(`http://localhost:5000/api/dop-work/${id}`, {
+	// 			method: 'PUT',
+	// 			headers: {
+	// 				"Accept": "application/json",
+	// 				'Content-Type': 'application/json',
+	// 			},
+	// 			body: JSON.stringify(row),
+				
+	// 		});
+	// 		if (!response.ok) {
+	// 			throw new Error('Something went wrong while saving');
+	// 		}
+	// 		console.log(row)
+			
+	// 		const updatedRow = await response.json();
+	// 		setRows((prev) => prev.map((row) => (row.id === id ? updatedRow : row)));
+	// 	} catch (error) {
+	// 		console.error("Failed to save data: ", error);
+	// 	}finally {
+	// 		// выйти из режима редактирования, независимо от того, была ли ошибка
+	// 		setRowModesModel((prev) => ({ ...prev, [id]: { mode: GridRowModes.View } }));
+	// 	}
+	// };
+
+
+	//  const handleDeleteClick = (id) => () => {
+	// 	 setRows(rows.filter((row) => row.id !== id));
+	//  };
 
   const handleDeleteClick = (id) => () => {
     setRows(rows.filter((row) => row.uniqueId !== id));
   };
 
+ 
+	//  const handleCancelClick = (id) => () => {
+	// 	 setRowModesModel({
+	// 		 ...rowModesModel,
+	// 		 [id]: { mode: GridRowModes.View, ignoreModifications: true },
+	// 	 });
+ 
+	// 	 const editedRow = rows.find((row) => row.id === id);
+	// 	 if (editedRow.isNew) {
+	// 		 setRows(rows.filter((row) => row.id !== id));
+	// 	 }
+	//  };
 
   const handleCancelClick = (id) => () => {
     setRowModesModel({
@@ -108,6 +169,15 @@ const GlobalTable = () => {
   };
  
 
+	// const processRowUpdate = (newRow) => {
+	// 	const updatedRow = { ...newRow };
+	// 	// console.log(updatedRow);
+	// 	setRows(currentRows => {
+	// 	  return currentRows.map(row => row.id === newRow.id ? updatedRow : row);
+	// 	});
+
+	// 	return newRow;
+	//   }; 
   const processRowUpdate = (newRow) => {
     // console.log('Updated Row:', newRow);
     const updatedRow = { ...newRow };
@@ -123,6 +193,66 @@ const GlobalTable = () => {
 		 setRowModesModel(newRowModesModel);
 	 };
 
+   const handleSaveClick = (id) => async () => {
+    setRowModesModel((prev) => ({ ...prev, [id]: { mode: GridRowModes.View } }));
+
+    const row = rows.find((r) => r.id === id);
+    const updatedRowData = JSON.stringify(row);
+
+    console.log(updatedRowData); // Выводим данные строки в консоль в формате JSON
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/dop-work/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: updatedRowData,
+      });
+      if (!response.ok) {
+        throw new Error('Что-то пошло не так при сохранении');
+      }
+
+      const updatedRow = await response.json();
+      setRows((prev) => prev.map((row) => (row.id === id ? updatedRow : row)));
+    } catch (error) {
+      console.error("Не удалось сохранить данные:", error);
+    } finally {
+      setRowModesModel((prev) => ({ ...prev, [id]: { mode: GridRowModes.View } }));
+    }
+  };
+  //  const handleSaveClick = (id) => async () => {
+	// 	setRowModesModel((prev) => ({ ...prev, [id]: { mode: GridRowModes.View } }));
+		
+	// 	const row = rows.find((r) => r.id === id);
+	// 	console.log(row);
+
+	// 	try {
+
+	// 		const response = await fetch(`http://localhost:5000/api/dop-work/${id}`, {
+	// 			method: 'PUT',
+	// 			headers: {
+	// 				"Accept": "application/json",
+	// 				'Content-Type': 'application/json',
+	// 			},
+	// 			body: JSON.stringify(row),
+				
+	// 		});
+	// 		if (!response.ok) {
+	// 			throw new Error('Something went wrong while saving');
+	// 		}
+	// 		console.log(row)
+			
+	// 		const updatedRow = await response.json();
+	// 		setRows((prev) => prev.map((row) => (row.id === id ? updatedRow : row)));
+	// 	} catch (error) {
+	// 		console.error("Failed to save data: ", error);
+	// 	}finally {
+	// 		// выйти из режима редактирования, независимо от того, была ли ошибка
+	// 		setRowModesModel((prev) => ({ ...prev, [id]: { mode: GridRowModes.View } }));
+	// 	}
+	// };
 
 	const formatDateString = (value) => {
 		const date = new Date(value);
@@ -131,11 +261,6 @@ const GlobalTable = () => {
 		const year = date.getFullYear();
 		return `${day}.${month}.${year}`;
 	};
-
-	const getRowIdFromUniqueId = (uniqueId) => {
-		const row = rows.find(row => row.uniqueId === uniqueId);
-		return row ? row.id : null;
-	  }	
 	
 	
 	 const columns = [
@@ -330,24 +455,53 @@ const GlobalTable = () => {
 			headerName: 'Параметры',
 			width: 100,
 			cellClassName: 'actions',
-			// getActions: ({ id }) => {
-			//   return [
-        	// 	<button onClick={() => handleEditClick(id)}><EditIcon/></button>
-			//   ];
-			// },
-			getActions: ({ id: uniqueId }) => {
-				const rowId = getRowIdFromUniqueId(uniqueId);
+			getActions: ({ id }) => {
+			  const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+			  
+	  
+			  if (isInEditMode) {
 				return [
-				  <button onClick={() => handleEditClick(rowId)}><EditIcon/></button>
+				  <GridActionsCellItem
+					icon={<SaveIcon />}
+					label="Save"
+					sx={{
+					  color: 'primary.main',
+					}}
+					onClick={handleSaveClick(id)}
+				  />,
+				  <GridActionsCellItem
+					icon={<CancelIcon />}
+					label="Cancel"
+					className="textPrimary"
+					onClick={handleCancelClick(id)}
+					color="inherit"
+				  />,
 				];
+			  }
+	  
+			  return [
+				// <GridActionsCellItem
+				//   icon={<EditIcon />}
+				//   label="Edit"
+				//   className="textPrimary"
+				//   onClick={handleEditClick(id)}
+				//   color="inherit"
+				// />,
+
+				// <GridActionsCellItem
+				//   icon={<DeleteIcon />}
+				//   label="Delete"
+				//   onClick={handleDeleteClick(id)}
+				//   color="inherit"
+				// />,
+        		<button onClick={() => handleEditClick(id)}><EditIcon/></button>
+			  ];
 			},
 		  },
 	 ];
-
-
+ 
 	 return (
 		<>
-			<button onClick={fetchData}>Перезагрузить таблицу</button>
 			<Box
 				sx={{
 				height: 500,
@@ -379,7 +533,6 @@ const GlobalTable = () => {
 				}}
 				/>
 			</Box>
-			<FormTableTesting currentId={currentId} />
 			<ReportQA/>
 		 </>
 		 

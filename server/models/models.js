@@ -1,12 +1,20 @@
 const sequelize = require('../db')
 const { DataTypes } = require('sequelize')
 
+// const User = sequelize.define('user', {
+//     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+//     email: {type: DataTypes.STRING, unique: true,},
+//     password: {type: DataTypes.STRING},
+//     role: {type: DataTypes.STRING, defaultValue: "USER"},
+// })
+
 const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    email: {type: DataTypes.STRING, unique: true,},
-    password: {type: DataTypes.STRING},
-    role: {type: DataTypes.STRING, defaultValue: "USER"},
+    email: {type: DataTypes.STRING, unique: true},
+    name: {type: DataTypes.STRING},
+    
 })
+
 
 
 const Dop = sequelize.define('dop_work_table', {
@@ -39,6 +47,7 @@ const Executor = sequelize.define('executor_table', {
     executorName: {type: DataTypes.STRING},                               // Имя и фамилия исполнителя
     executorDepartament: {type: DataTypes.STRING}                         // Отдел
 })
+
 
 
 

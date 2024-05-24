@@ -1,8 +1,0 @@
-export const ADMIN_ROUTE = '/admin'
-export const LOGIN_ROUTE = '/login'
-export const REGISTRATION_ROUTE = '/registration'
-// export const MAIN_ROUTE = 'admin/main'
-export const ADWORK_ROUTE = '/adwork'
-export const MAIN_ROUTE = '/'
-export const TABLE_ROUTE = '/globalTable'
-export const NOTREG_ROUTE = '/default-main'

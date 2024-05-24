@@ -3,15 +3,20 @@
     justify-content: flex-end;
 }
 nav{
-    max-width: 600px;
+    max-width: 1800px;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-wrap: wrap;
+    justify-content: flex-end; 
 }
 .main__l{
-    font-size: 35px;
+    font-size: 20px;
     font-weight: 700;
     color: #160B34;
     text-align: center;
     text-decoration: none; 
+    border: 2px solid #160B34;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
 }

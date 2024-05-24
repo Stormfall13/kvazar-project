@@ -1,7 +1,5 @@
-.auth{
+.user__wrapp{
     display: flex;
     flex-direction: column;
-}
-.auth input{
-    margin: 5px 0;
+    align-items: flex-start;
 }

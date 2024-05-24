@@ -5,3 +5,30 @@
 .MuiDataGrid-columnHeaderTitleContainer{
   justify-content: center !important;
 }
+
+.table__testing{
+  display: flex;
+  flex-direction: row !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  justify-content: flex-start;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+.table__testing textarea{
+  min-height: 260px;
+  max-width: 500px;
+  width: 100%;
+  border-radius: 6px;
+}
+.textarea__wrapp{
+  max-width: 500px !important;
+}
+.table__testing .input__wrapp{
+  margin: 10px;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}

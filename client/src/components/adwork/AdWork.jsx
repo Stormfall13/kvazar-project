@@ -1,11 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 import closeImg from '../../assets/close.svg';
 import './adwork.css'
 
 
 const AdWork = () => {
+
+    const { user } = useAuth0();
+    console.log(user);
 
     const [reglament, setReglament] = useState('');
     const [executor, setExecutor] = useState('');
@@ -18,7 +23,7 @@ const AdWork = () => {
     const [counting, setCounting] = useState('');
     const [iteration, setIteration] = useState('');
     const [point, setPoint] = useState('');
-    const [inspector, setInspector] = useState('');
+    const [inspector, setInspector] = useState(user.name);
     const [departament, setDepartament] = useState('');
     const [delayTester, setDelayTester] = useState('');
     const [delayExecutor, setDelayExecutor] = useState('');
@@ -195,7 +200,7 @@ const AdWork = () => {
         }
     })
 
-    // || executor.length > 0 || typeWork.length > 0 || amount.length > 0 || typeTest.length > 0
+    
     const item = {
         "reglament": reglament,
         "executor": executor,
@@ -329,16 +334,7 @@ const AdWork = () => {
                 {/* ################## */}
                 <div className="point__work">
                     <span className='options__work'>Проверяющий</span>
-                    <input value={inspector} onChange={(e) => setInspector(e.target.value)} className="main__input" type="text" list='Проверяющий'/>
-                    <datalist id='Проверяющий'>
-                        {executorList && executorList.map((executorElement, id) => {
-                            if(executorElement.executorDepartament === 'Тестировщик'){
-                                return (
-                                    <option key={id} value={executorElement.executorName}></option>
-                                )
-                            }
-                        })}
-                    </datalist> 
+                    <input disabled value={inspector} onChange={(e) => setInspector(e.target.value)} className="main__input" type="text" list='Проверяющий'/>
                 </div>
                 {/* ################## */}
                 <div className="point__work">
