@@ -10,7 +10,7 @@ import './adwork.css'
 const AdWork = () => {
 
     const { user } = useAuth0();
-    console.log(user);
+    // console.log(user);
 
     const [reglament, setReglament] = useState('');
     const [executor, setExecutor] = useState('');

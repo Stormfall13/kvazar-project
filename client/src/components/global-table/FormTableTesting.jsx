@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import './globalTable.css'
 
 const FormTableTesting = ({ currentId }) => {
-    const [id, setId] = useState(`${currentId}`); // ID
+    const [id, setId] = useState(''); // ID
     const [reglament, setReglament] = useState(''); // Регламент
     const [executor, setExecutor] = useState(''); // Исполнитель
     const [amount, setAmount] = useState(''); // Кол-во работ в реге
@@ -20,6 +20,9 @@ const FormTableTesting = ({ currentId }) => {
     const [delayExecutor, setDelayExecutor] = useState(''); // Просрочка исполнителя
     const [commentError, setCommentError] = useState(''); // Комментарий ошибки
 
+    useEffect(() => {
+        setId(currentId)
+    })
     // console.log(currentId);
     console.log(id);
 
@@ -46,6 +49,8 @@ const FormTableTesting = ({ currentId }) => {
             // dispute,
             commentError,
         }
+
+        console.log("Submitting data: ", item);
 
         try {
             const response = await fetch(`http://localhost:5000/api/dop-work/${id}`, { // замените URL на ваш реальный
@@ -144,7 +149,7 @@ const FormTableTesting = ({ currentId }) => {
                 <span>Критические ошибки</span>
                 <input 
                     type="text" 
-                    value={errors}
+                    value={critic}
                     onChange={(e) => setCritic(e.target.value)}
                 />
             </div>

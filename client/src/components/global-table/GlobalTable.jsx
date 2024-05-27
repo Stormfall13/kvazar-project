@@ -4,8 +4,6 @@ import './globalTable.css'
 import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
 import {
 	GridRowModes,
 	DataGrid,
@@ -13,29 +11,20 @@ import {
 	GridToolbarExport,
 	GridToolbarColumnsButton,
 	GridToolbarDensitySelector,
-	GridActionsCellItem,
 	GridRowEditStopReasons,
 	ruRU,
 } from '@mui/x-data-grid';
-import {
-  randomArrayItem,
-} from '@mui/x-data-grid-generator';
 import ReportQA from '../reportQA/ReportQA';
 import FormTableTesting from './FormTableTesting';
 
-// const roles = ['Market', 'Finance', 'Development'];
-// const randomRole = () => {
-//   return randomArrayItem(roles);
-// };
 
 function CustomToolbar() {
 	return (
-	  <GridToolbarContainer>
+	<GridToolbarContainer>
 		<GridToolbarColumnsButton />
 		<GridToolbarDensitySelector />
 		<GridToolbarExport />
-	  </GridToolbarContainer>
-	  
+	</GridToolbarContainer>
 	);
 }
 
@@ -43,85 +32,91 @@ const myLocaleText = {
 	toolbarExport: 'Экспорт',
 	toolbarExportLabel: 'Экспорт',
 	toolbarExportCSV: 'Скачать в формате CSV',
-  };
+};
 
 const GlobalTable = () => {
 
 	const [ currentId , setCurrentId ] = useState('');
+	const [ rowsItem , setRowsItem ] = useState('');
 
-	const handleEditClick = (id) => {
-		console.log(id);
-		setCurrentId(id);
+	// const handleEditClick = (id) => {
+	// 	console.log(id);
+	// 	setCurrentId(id);
+	// 	setRowsItem(row);
+	// };
+
+	const handleEditClick = (row) => {
+		console.log(row);
+		setCurrentId(row.id);
+		setRowsItem(row);
 	};
 
-	 const [rows, setRows] = React.useState([]);
-	 const [rowModesModel, setRowModesModel] = React.useState({});
-
-	 const sortRowsByCreatedAt = (rowArray) => {
+	const [rows, setRows] = React.useState([]);
+	const [rowModesModel, setRowModesModel] = React.useState({});
+	const sortRowsByCreatedAt = (rowArray) => {
 		return [...rowArray].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-	  };
+	};
 	
 
 	const fetchData = async () => {
 		try {
-		  const response = await fetch('http://localhost:5000/api/dop-work', {
-			method: "GET",
-			headers: {
-			  "Accept": "application/json"
+			const response = await fetch('http://localhost:5000/api/dop-work', {
+				method: "GET",
+				headers: {
+					"Accept": "application/json"
 			}
-		  });
-		  const data = await response.json();
-		  const sortedData = sortRowsByCreatedAt(data);
-		  setRows(sortedData.map((item, index) => ({ ...item, id: item.key || item.id || index })));
+		});
+			const data = await response.json();
+			const sortedData = sortRowsByCreatedAt(data);
+			setRows(sortedData.map((item, index) => ({ ...item, id: item.key || item.id || index })));
 		} catch (error) {
-		  console.error("Failed to fetch data: ", error);
+			console.error("Failed to fetch data: ", error);
 		}
-	  };
+	};
 	
-	  useEffect(() => {
+	useEffect(() => {
 		fetchData();
-	  }, []);
+	}, []);
 
 
-	 const handleRowEditStop = (params, event) => {
-		 if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-			 event.defaultMuiPrevented = true;
-		 }
-	 };
- 
-
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.uniqueId !== id));
-  };
+	const handleRowEditStop = (params, event) => {
+		if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+			event.defaultMuiPrevented = true;
+		}
+	};
 
 
-  const handleCancelClick = (id) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+	const handleDeleteClick = (id) => () => {
+		setRows(rows.filter((row) => row.uniqueId !== id));
+	};
+
+
+	const handleCancelClick = (id) => () => {
+		setRowModesModel({
+			...rowModesModel,
+			[id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
 
     const editedRow = rows.find((row) => row.uniqueId === id);
-    if (editedRow.isNew) {
-      setRows(rows.filter((row) => row.uniqueId !== id));
-    }
-  };
- 
+		if (editedRow.isNew) {
+			setRows(rows.filter((row) => row.uniqueId !== id));
+		}
+	};
 
-  const processRowUpdate = (newRow) => {
+	const processRowUpdate = (newRow) => {
     // console.log('Updated Row:', newRow);
     const updatedRow = { ...newRow };
     // console.log(updatedRow);
     setRows(currentRows => {
-      return currentRows.map(row => row.id === newRow.id ? updatedRow : row);
+		return currentRows.map(row => row.id === newRow.id ? updatedRow : row);
     });
 
     return updatedRow;
-  };
- 
-	 const handleRowModesModelChange = (newRowModesModel) => {
-		 setRowModesModel(newRowModesModel);
-	 };
+	};
+
+	const handleRowModesModelChange = (newRowModesModel) => {
+		setRowModesModel(newRowModesModel);
+	};
 
 
 	const formatDateString = (value) => {
@@ -132,58 +127,63 @@ const GlobalTable = () => {
 		return `${day}.${month}.${year}`;
 	};
 
-	const getRowIdFromUniqueId = (uniqueId) => {
-		const row = rows.find(row => row.uniqueId === uniqueId);
-		return row ? row.id : null;
-	  }	
+	// const getRowIdFromUniqueId = (uniqueId) => {
+	// 	const row = rows.find(row => row.uniqueId === uniqueId);
+	// 	setRowsItem(row)
+	// 	return row ? row.id : null;
+	// }	
+
+	const getRowFromUniqueId = (uniqueId) => {
+		return rows.find(row => row.uniqueId === uniqueId);
+	}
 	
 	
-	 const columns = [
-		 { 
+	const columns = [
+		{ 
 			field: 'id', 
 			headerName: 'ID', 
 			width: 50, 
 			cellClassName: 'cellColumn',
 			editable: false,
-		 },
-		 {
-			 field: 'date',
-			 headerName: 'Дата',
-			 type: 'text',
-			 width: 100,
-			 align: 'left',
-			 headerAlign: 'left',
-			 cellClassName: 'cellColumn',
-			 valueFormatter: (params) => formatDateString(params.value),
-		 },
-		 {
-			 field: 'reglament',
-			 headerName: 'Ссылка на регламент',
-			 type: 'link',
-			 width: 180,
-			 editable: true,
-			 cellClassName: 'cellColumn',
-			 renderCell: (params) => {
+		},
+		{
+			field: 'date',
+			headerName: 'Дата',
+			type: 'text',
+			width: 100,
+			align: 'left',
+			headerAlign: 'left',
+			cellClassName: 'cellColumn',
+			valueFormatter: (params) => formatDateString(params.value),
+		},
+		{
+			field: 'reglament',
+			headerName: 'Ссылка на регламент',
+			type: 'link',
+			width: 180,
+			editable: true,
+			cellClassName: 'cellColumn',
+			renderCell: (params) => {
 				const reglamentIndex = params.value.indexOf('/reglament');
 				const displayText = reglamentIndex !== -1 ? params.value.substring(reglamentIndex) : 'Нет ссылки';
 			
 				return (
-				  <a href={params.value} target="_blank" rel="noopener noreferrer">
-					{displayText}
-				  </a>
+					<a href={params.value} target="_blank" rel="noopener noreferrer">
+						{displayText}
+					</a>
 				);
-			  },
+			},
 			
-		 },
-		 {
-			 field: 'inspector',
-			 headerName: 'Проверяющй',
-			 width: 180,
-			 editable: true,
-			 type: 'text',
-			 valueOptions: ['Market', 'Finance', 'Development'],
-		 },
-		 {
+		},
+		{
+			field: 'inspector',
+			headerName: 'Проверяющй',
+			width: 180,
+			editable: true,
+			type: 'text',
+			valueOptions: ['Market', 'Finance', 'Development'],
+		},
+		{
 			field: 'executor',
 			headerName: 'Исполнитель',
 			type: 'text',
@@ -303,49 +303,51 @@ const GlobalTable = () => {
 			width: 180,
 			editable: true,
 		},
-		 {
-			 field: 'linkReport',
-			 type: 'link',
-			 headerName: 'Ссылка для отчета',
-			 width: 200,
-			 cellClassName: 'action',
-			 renderCell: (params) => {
+		{
+			field: 'linkReport',
+			type: 'link',
+			headerName: 'Ссылка для отчета',
+			width: 200,
+			cellClassName: 'action',
+			renderCell: (params) => {
 				if (!params.value) {
-				  return <span>Invalid URL</span>;
+					return <span>Invalid URL</span>;
 				}
 			
 				const reglamentIndex = params.value.indexOf('/reglament');
 				const displayText = reglamentIndex !== -1 ? params.value.substring(reglamentIndex) : params.value;
-			  
+			
 				return (
-				  <a href={params.value} target="_blank" rel="noopener noreferrer">
-					{displayText}
-				  </a>
+					<a href={params.value} target="_blank" rel="noopener noreferrer">
+						{displayText}
+					</a>
 				);
-			  },
-		 },
-		 {
+			},
+		},
+		{
 			field: 'actions',
 			type: 'actions',
 			headerName: 'Параметры',
 			width: 100,
 			cellClassName: 'actions',
 			// getActions: ({ id }) => {
-			//   return [
-        	// 	<button onClick={() => handleEditClick(id)}><EditIcon/></button>
-			//   ];
+			// 	return [
+			// 		<button onClick={() => handleEditClick(id)}><EditIcon/></button>
+			// 	];
 			// },
 			getActions: ({ id: uniqueId }) => {
-				const rowId = getRowIdFromUniqueId(uniqueId);
+				// const rowId = getRowIdFromUniqueId(uniqueId);
+				const row = getRowFromUniqueId(uniqueId);
 				return [
-				  <button onClick={() => handleEditClick(rowId)}><EditIcon/></button>
+					// <button onClick={() => handleEditClick(rowId)}><EditIcon/></button>
+					<button onClick={() => handleEditClick(row)}><EditIcon/></button>
 				];
 			},
-		  },
-	 ];
+		},
+	];
 
 
-	 return (
+	return (
 		<>
 			<button onClick={fetchData}>Перезагрузить таблицу</button>
 			<Box
@@ -379,12 +381,12 @@ const GlobalTable = () => {
 				}}
 				/>
 			</Box>
-			<FormTableTesting currentId={currentId} />
+			<FormTableTesting currentId={currentId} rowsItem={rowsItem} />
 			<ReportQA/>
-		 </>
-		 
-	 );
-	 
+		</>
+		
+	);
+
 
 }
 
