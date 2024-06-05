@@ -91,6 +91,22 @@ class DopController {
             return next(ApiError.internal(`Error updating work: ${error.message}`));
         }
     }
+    async delete(req, res, next) {
+        try {
+            const { id } = req.params;
+            const rowCount = await Dop.destroy({
+                where: { id: id }
+            });
+
+            if (rowCount === 0) {
+                return next(ApiError.notFound(`Work with id ${id} not found`));
+            }
+
+            return res.json({ message: `Work with id ${id} has been deleted` });
+        } catch (error) {
+            return next(ApiError.internal(`Error deleting work: ${error.message}`));
+        }
+    }
 }
 
 module.exports = new DopController();

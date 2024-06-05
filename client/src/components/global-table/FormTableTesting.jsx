@@ -1,30 +1,69 @@
 import { useState, useEffect } from "react";
 import './globalTable.css'
+import GlobalTable from "./GlobalTable";
 
-const FormTableTesting = ({ currentId }) => {
+const FormTableTesting = ({ currentId, rowsItem, isVisible, onClose, fetchData }) => {
     const [id, setId] = useState(''); // ID
-    const [reglament, setReglament] = useState(''); // Регламент
-    const [executor, setExecutor] = useState(''); // Исполнитель
-    const [amount, setAmount] = useState(''); // Кол-во работ в реге
-    const [typeWork, setTypeWork] = useState(''); // Вид работ ( типовая или не типовая)
-    const [typeTest, setTypeTest] = useState(''); // Вид проверки ( 1-2 )
-    const [recommen, setRecommen] = useState(''); // Рекомендации
-    const [errors, setErrors] = useState(''); // Ошибки
-    const [critic, setCritic] = useState(''); // Критические ошибки
-    const [counting, setCounting] = useState(''); // Отчет
-    const [iteration, setIteration] = useState(''); // Итерации
-    const [point, setPoint] = useState(''); // Баллы
-    const [inspector, setInspector] = useState(''); // Проверяющий
-    const [departament, setDepartament] = useState(''); // Отдел
-    const [delayTester, setDelayTester] = useState(''); // Просрочка тестировщика
-    const [delayExecutor, setDelayExecutor] = useState(''); // Просрочка исполнителя
-    const [commentError, setCommentError] = useState(''); // Комментарий ошибки
+    const [reglament, setReglament] = useState(rowsItem.reglament); // Регламент
+    const [executor, setExecutor] = useState(rowsItem.executor); // Исполнитель
+    const [amount, setAmount] = useState(rowsItem.amount); // Кол-во работ в реге
+    const [typeWork, setTypeWork] = useState(rowsItem.typeWork); // Вид работ ( типовая или не типовая)
+    const [typeTest, setTypeTest] = useState(rowsItem.typeTest); // Вид проверки ( 1-2 )
+    const [recommen, setRecommen] = useState(rowsItem.recommen); // Рекомендации
+    const [errors, setErrors] = useState(rowsItem.errors); // Ошибки
+    const [critic, setCritic] = useState(rowsItem.critic); // Критические ошибки
+    const [counting, setCounting] = useState(rowsItem.counting); // Отчет
+    const [iteration, setIteration] = useState(rowsItem.iteration); // Итерации
+    const [point, setPoint] = useState(rowsItem.point); // Баллы
+    const [inspector, setInspector] = useState(rowsItem.inspector); // Проверяющий
+    const [departament, setDepartament] = useState(rowsItem.departament); // Отдел
+    const [delayTester, setDelayTester] = useState(rowsItem.delayTester); // Просрочка тестировщика
+    const [delayExecutor, setDelayExecutor] = useState(rowsItem.delayExecutor); // Просрочка исполнителя
+    const [commentError, setCommentError] = useState(rowsItem.commentError); // Комментарий ошибки
+
+    // setReglament()
+    // setExecutor()
+    // setAmount()
+    // setTypeWork()
+    // setTypeTest()
+    // setRecommen()
+    // setErrors()
+    // setCritic()
+    // setCounting()
+    // setIteration()
+    // setPoint()
+    // setInspector()
+    // setDepartament()
+    // setDelayTester()
+    // setDelayExecutor()
+    // setCommentError()
+
+    // const dataFunctions = () => {
+    //     setReglament
+    //     setExecutor
+    //     setAmount
+    //     setTypeWork
+    //     setTypeTest
+    //     setRecommen
+    //     setErrors
+    //     setCritic
+    //     setCounting
+    //     setIteration
+    //     setPoint
+    //     setInspector
+    //     setDepartament
+    //     setDelayTester
+    //     setDelayExecutor
+    //     setCommentError
+    // }
+    // console.log(dataFunctions);
 
     useEffect(() => {
         setId(currentId)
     })
     // console.log(currentId);
-    console.log(id);
+    // console.log(id);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -66,7 +105,9 @@ const FormTableTesting = ({ currentId }) => {
             }
 
             const data = await response.json();
-            console.log('Success:', data);
+            // console.log('Success:', data);
+            fetchData();
+            onClose();
         } catch (error) {
             console.error('Error:', error);
         }
@@ -74,10 +115,11 @@ const FormTableTesting = ({ currentId }) => {
 
 
     return (
+        <>
         <form className="table__testing" onSubmit={handleSubmit} style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start"
+            display: isVisible ? 'flex' : 'none',
+            opacity: isVisible ? 1 : 0,
+            transition: 'opacity 0.3s ease'
         }}>
             <div className="input__wrapp">
                 <span>ID</span>
@@ -219,6 +261,8 @@ const FormTableTesting = ({ currentId }) => {
             </div>
             <button type="submit">Изменить</button>
         </form>
+        {/* <GlobalTable dataFunctions={dataFunctions}/> */}
+        </>
     );
 }
 

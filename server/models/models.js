@@ -14,7 +14,7 @@ const Dop = sequelize.define('dop_work_table', {
     recommen: {type: DataTypes.INTEGER, defaultValue: 0},           // Рекомендации
     errors: {type: DataTypes.INTEGER, defaultValue: 0},             // Ошибки
     critic: {type: DataTypes.INTEGER, defaultValue: 0},             // Критические ошибки
-    counting: {type: DataTypes.STRING},                             // Отчет
+    counting: {type: DataTypes.TEXT},                               // Отчет
     iteration: {type: DataTypes.INTEGER, defaultValue: 0},          // Итерации
     point: {type: DataTypes.FLOAT},                                 // Баллы
     inspector: {type: DataTypes.STRING},                            // Проверяющий
