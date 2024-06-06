@@ -32,3 +32,43 @@
   flex-direction: column;
   justify-content: flex-start;
 }
+
+.counting__window{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 100vh;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column-reverse;
+  backdrop-filter: blur(10px);
+}
+
+.counting__area{
+  max-width: 500px;
+  width: 100%;
+  color: #343232;
+}
+
+.close__countingWindow{
+  border: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  cursor: pointer;
+}
+
+.edit__icon,
+.delete__icon{
+  background: transparent;
+  border: 0;
+}

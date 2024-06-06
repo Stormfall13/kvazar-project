@@ -1,6 +1,7 @@
 import React from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import './globalTable.css'
 
 const formatDateString = (value) => {
     const date = new Date(value);
@@ -11,7 +12,7 @@ const formatDateString = (value) => {
 };
 
 
-export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromUniqueId) => [
+export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromUniqueId, handleCountingClick) => [
     { 
         field: 'id', 
         headerName: 'ID', 
@@ -111,6 +112,12 @@ export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromU
         type: 'text',
         width: 120,
         editable: true,
+        cellClassName: 'cellCounting',
+        renderCell: (params) => (
+            <div onClick={() => handleCountingClick(params.value)}>
+                {params.value}
+            </div>
+        ),
     },
     {
         field: 'iteration',
@@ -206,8 +213,8 @@ export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromU
             const row = getRowFromUniqueId(uniqueId);
             return [
                 <>
-                <button onClick={() => handleEditClick(row)}><EditIcon/></button>
-                <button onClick={() => handleDeleteClick(row)}><DeleteIcon/></button>
+                <button className='edit__icon' onClick={() => handleEditClick(row)}><EditIcon /></button>
+                <button className='delete__icon' onClick={() => handleDeleteClick(row)}><DeleteIcon /></button>
                 </>
             ];
         },

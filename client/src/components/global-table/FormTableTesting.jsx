@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import './globalTable.css'
-import GlobalTable from "./GlobalTable";
+
 
 const FormTableTesting = ({ currentId, rowsItem, isVisible, onClose, fetchData }) => {
     const [id, setId] = useState(''); // ID
@@ -21,48 +21,13 @@ const FormTableTesting = ({ currentId, rowsItem, isVisible, onClose, fetchData }
     const [delayExecutor, setDelayExecutor] = useState(rowsItem.delayExecutor); // Просрочка исполнителя
     const [commentError, setCommentError] = useState(rowsItem.commentError); // Комментарий ошибки
 
-    // setReglament()
-    // setExecutor()
-    // setAmount()
-    // setTypeWork()
-    // setTypeTest()
-    // setRecommen()
-    // setErrors()
-    // setCritic()
-    // setCounting()
-    // setIteration()
-    // setPoint()
-    // setInspector()
-    // setDepartament()
-    // setDelayTester()
-    // setDelayExecutor()
-    // setCommentError()
-
-    // const dataFunctions = () => {
-    //     setReglament
-    //     setExecutor
-    //     setAmount
-    //     setTypeWork
-    //     setTypeTest
-    //     setRecommen
-    //     setErrors
-    //     setCritic
-    //     setCounting
-    //     setIteration
-    //     setPoint
-    //     setInspector
-    //     setDepartament
-    //     setDelayTester
-    //     setDelayExecutor
-    //     setCommentError
-    // }
-    // console.log(dataFunctions);
-
     useEffect(() => {
         setId(currentId)
     })
     // console.log(currentId);
     // console.log(id);
+
+    
 
 
     const handleSubmit = async (e) => {
@@ -153,7 +118,13 @@ const FormTableTesting = ({ currentId, rowsItem, isVisible, onClose, fetchData }
                     type="text" 
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
+                    list="КоличествоРабот"
                 />
+                <datalist id='КоличествоРабот'>
+                    <option value="1-2"></option>
+                    <option value="3-5"></option>
+                    <option value="6 и более"></option>
+                </datalist>
             </div>
             <div className="input__wrapp">
                 <span>Вид работ</span>
@@ -161,7 +132,13 @@ const FormTableTesting = ({ currentId, rowsItem, isVisible, onClose, fetchData }
                     type="text" 
                     value={typeWork}
                     onChange={(e) => setTypeWork(e.target.value)}
+                    list="ВидРабот"
                 />
+                <datalist id='ВидРабот'>
+                    <option value="Типовая"></option>
+                    <option value="Не типовая"></option>
+                    <option value="Средняя"></option>
+                </datalist> 
             </div>
             <div className="input__wrapp">
                 <span>Вид проверки</span>
@@ -169,8 +146,14 @@ const FormTableTesting = ({ currentId, rowsItem, isVisible, onClose, fetchData }
                     type="text" 
                     value={typeTest}
                     onChange={(e) => setTypeTest(e.target.value)}
+                    list="ВидПроверки"
                 />
             </div>
+                <datalist id='ВидПроверки'>
+                    <option value="Первая"></option>
+                    <option value="Итерация"></option>
+                    <option value="Наша ошибка"></option>
+                </datalist>  
             <div className="input__wrapp">
                 <span>Рекомендации</span>
                 <input 
@@ -261,7 +244,6 @@ const FormTableTesting = ({ currentId, rowsItem, isVisible, onClose, fetchData }
             </div>
             <button type="submit">Изменить</button>
         </form>
-        {/* <GlobalTable dataFunctions={dataFunctions}/> */}
         </>
     );
 }
