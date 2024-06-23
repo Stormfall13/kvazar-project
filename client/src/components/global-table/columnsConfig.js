@@ -3,6 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import './globalTable.css'
 
+
 const formatDateString = (value) => {
     const date = new Date(value);
     const day = date.getDate().toString().padStart(2, '0');
@@ -204,6 +205,16 @@ export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromU
         },
     },
     {
+        field: 'reportPeriods',
+        headerName: 'Дата отчета',
+        type: 'text',
+        width: 100,
+        align: 'left',
+        headerAlign: 'left',
+        cellClassName: 'cellColumn',
+        valueFormatter: (params) => formatDateString(params.value),
+    },
+    {
         field: 'actions',
         type: 'actions',
         headerName: 'Параметры',
@@ -211,6 +222,7 @@ export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromU
         cellClassName: 'actions',
         getActions: ({ id: uniqueId }) => {
             const row = getRowFromUniqueId(uniqueId);
+
             return [
                 <>
                 <button className='edit__icon' onClick={() => handleEditClick(row)}><EditIcon /></button>

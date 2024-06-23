@@ -18,9 +18,9 @@ import useUserRoles from '../../auth/useUserRoles';
 function CustomToolbar() {
 	return (
 	<GridToolbarContainer>
-		<GridToolbarColumnsButton />
-		<GridToolbarDensitySelector />
-		<GridToolbarExport />
+		<GridToolbarColumnsButton className='btnGrid' />
+		<GridToolbarDensitySelector className='btnGrid' />
+		<GridToolbarExport className='btnGrid' />
 	</GridToolbarContainer>
 	);
 }
@@ -49,8 +49,6 @@ const GlobalTable = () => {
 		setRowsItem(row);
 		setIsFormVisible(true);
 
-
-
 		setTimeout(() => {
             if (formRef.current) {
                 formRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -69,8 +67,6 @@ const GlobalTable = () => {
         setCountingWindowVisible(false);
         setCountingWindowData('');
     };
-
-
 
 	const [rows, setRows] = React.useState([]);
 	const [rowModesModel, setRowModesModel] = React.useState({});
@@ -134,16 +130,16 @@ const GlobalTable = () => {
 	const getRowFromUniqueId = (uniqueId) => {
 		return rows.find(row => row.uniqueId === uniqueId);
 	}
+
 	
 	const columns = getColumnsConfig(handleEditClick, handleDeleteClick, getRowFromUniqueId, handleCountingClick);
 	
 	const userHasRole = (role) => {
 		return roles.includes(role);
-	  };
+	};
 	
 	return (
 		<>
-		{userHasRole('rol_jW7WS4A7VgcTET0I') && (
 			<Box
 				sx={{
 				height: 500,
@@ -159,6 +155,7 @@ const GlobalTable = () => {
 			>
 				
 				<DataGrid
+				className=''
 				rows={rows}
 				getRowId={(row) => row.uniqueId}
 				columns={columns}
@@ -174,7 +171,6 @@ const GlobalTable = () => {
 				}}
 				/>
 			</Box>
-			 )}
 			<div ref={formRef}>
 				<FormTableTesting currentId={currentId} rowsItem={rowsItem} fetchData={fetchData} isVisible={isFormVisible}  onClose={() => setIsFormVisible(false)}  />
 			</div>

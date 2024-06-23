@@ -5,7 +5,7 @@ import UserNameMenu from '../UserNameMenu/UserNameMenu';
 const MainNav = () => {
 
     const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
-
+    
     // Если компонент загружается, и пользователь не аутентифицирован, перенаправляем на Auth0
     useEffect(() => {
         if (!isLoading && !isAuthenticated) {

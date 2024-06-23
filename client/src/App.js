@@ -1,5 +1,5 @@
 import "./App.css";
-import Background from "./components/background/Background";
+import './index.css'
 import Main from "./components/main/Main";
 import AdWork from "./components/adwork/AdWork";
 import NewSite from "./components/newsite/NewSite";
@@ -21,32 +21,41 @@ const App = () => {
 
   // Создаем состояние для хранения цвета фона
   const [backgroundColor, setBackgroundColor] = useState('');
+  const [textColor, setTextColor] = useState('');
+  const [overElementColor, setOverElementColor] = useState('')
 
   // Функция для изменения фона
   const changeBackground = () => {
     // Задаем новый цвет как состояние
-    setBackgroundColor('#112d49'); // Можете заменить на желаемый цвет
+    setBackgroundColor('#001e2b'); // Можете заменить на желаемый цвет
+    setTextColor('#e8edeb')
+    setOverElementColor('#6beab2')
   };
 
   // Используем эффект для применения фона к body
   React.useEffect(() => {
     // Применяем цвет фона к элементу body
     document.body.style.background = backgroundColor;
+    document.body.style.color = textColor;
+    document.querySelectorAll('.btnGrid').forEach(btnGridElement => {
+      btnGridElement.style.color = overElementColor;
+    })
 
     // Опционально: возвращаем функцию для сброса фона при демонтировании компонента
     return () => {
       document.body.style.background = ''; // или другой базовый цвет
+      document.body.style.color = ''
+      document.querySelector('.btnGrid').style.color = ''
     };
-  }, [backgroundColor]); // Зависимость от состояния backgroundColor
+  }, [backgroundColor, textColor]); // Зависимость от состояния backgroundColor
 
   return (
-    <div className='App'>
+    <div className='App font-sans font-medium m-0 bg-green-500 relative'>
       <div className="wrapp__app">
-        <button className="btn__theme" onClick={changeBackground}>Темная тема</button>
+        <button className="text-lg bg-slate-50 pt-2 pb-2 pl-4 pr-4" onClick={changeBackground}>Темная тема</button>
         <MainNav/>
       </div>
         <NavMenu/>
-        <Background />
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path='/adwork' element={<AdWork />} />
