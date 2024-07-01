@@ -41,7 +41,7 @@ const AdWork = () => {
             {
                 "id": "january",
                 "startDate": "2024-01-01",
-                "endDate": "2024-01-29"
+                "endDate": "2024-01-28"
             },
             {
                 "id": "february",
@@ -50,7 +50,7 @@ const AdWork = () => {
             },
             {
                 "id": "march",
-                "startDate": "2024-02-27",
+                "startDate": "2024-02-28",
                 "endDate": "2024-03-27"
             },
             {
@@ -66,48 +66,55 @@ const AdWork = () => {
             {
                 "id": "june",
                 "startDate": "2024-05-30",
-                "endDate": "2024-06-30",
+                "endDate": "2024-06-26",
             },
             {
                 "id": "july",
-                "startDate": "",
-                "endDate": "",
+                "startDate": "2024-06-27",
+                "endDate": "2024-07-28",
             },
             {
                 "id": "august",
-                "startDate": "",
-                "endDate": "",
+                "startDate": "2024-07-29",
+                "endDate": "2024-08-28",
             },
             {
                 "id": "september",
-                "startDate": "",
-                "endDate": "",
+                "startDate": "2024-08-29",
+                "endDate": "2024-09-25",
             },
             {
                 "id": "october",
-                "startDate": "",
-                "endDate": "",
+                "startDate": "2024-09-26",
+                "endDate": "2024-10-28",
             },
             {
                 "id": "november",
-                "startDate": "",
-                "endDate": "",
+                "startDate": "2024-10-29",
+                "endDate": "2024-11-26",
             },
             {
                 "id": "december",
-                "startDate": "",
-                "endDate": "",
+                "startDate": "2024-11-27",
+                "endDate": "2024-12-26",
             },
         ];
 
         setReportPeriods(dataPeriods);
     }, []);
 
-    const getReportPeriodForDate = (date) => {
-        return reportPeriods.find(period =>
+    const getFormattedPeriodStart = (date) => {
+        const period = reportPeriods.find(period =>
             new Date(date) >= new Date(period.startDate) &&
             new Date(date) <= new Date(period.endDate)
         );
+        if (period) {
+            const startDate = new Date(period.startDate);
+            // Устанавливаем первый день месяца
+            startDate.setDate(1);
+            return startDate.toISOString().split('T')[0]; // Преобразуем дату в строку формата YYYY-MM-DD
+        }
+        return '';
     };
 
     useEffect(() => {
@@ -244,8 +251,7 @@ const AdWork = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const currentPeriod = getReportPeriodForDate(new Date());
-        const formattedPeriod = currentPeriod ? currentPeriod.startDate : '';
+        const formattedPeriodStart = getFormattedPeriodStart(new Date());
 
         const item = {
             "reglament": reglament,
@@ -266,7 +272,7 @@ const AdWork = () => {
             "commentError": commentError,
             "linkReport": linkReport,
             "uniqueId": uniqueId,
-            "reportPeriods": formattedPeriod,
+            "reportPeriods": formattedPeriodStart,
         };
 
         fetch('http://localhost:5000/api/dop-work', {

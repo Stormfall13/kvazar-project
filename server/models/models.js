@@ -5,7 +5,7 @@ const { DataTypes, DATE } = require('sequelize')
 
 const Dop = sequelize.define('dop_work_table', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}, // ID
-    date: {type: DataTypes.DATE, defaultValue: Date.now()},         // Отметка времени
+    date: {type: DataTypes.DATEONLY, defaultValue: Date.now()},         // Отметка времени
     reglament: {type: DataTypes.STRING},                            // Ссылка на регламент
     executor: {type: DataTypes.STRING},                             // Исполнители
     amount: {type: DataTypes.STRING},                               // Кол-во доп. работ в реге
@@ -26,7 +26,7 @@ const Dop = sequelize.define('dop_work_table', {
     commentError: {type: DataTypes.STRING},                         // Комментарий ошибки
     linkReport: {type: DataTypes.STRING},                           // ссылка для отчета
     uniqueId: {type: DataTypes.STRING},                             // Уникальный ID uuid
-    reportPeriods: {type: DataTypes.DATE},
+    reportPeriods: {type: DataTypes.DATEONLY},
 })
 
 const Executor = sequelize.define('executor_table', {

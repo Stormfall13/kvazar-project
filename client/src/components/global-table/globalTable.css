@@ -72,3 +72,8 @@
   background: transparent;
   border: 0;
 }
+
+.wrapp__formTable{
+  max-width: 1800px;
+  margin: 0 auto;
+}

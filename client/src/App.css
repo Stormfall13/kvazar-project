@@ -1,18 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400;500;600;700&display=swap');
 
-/* *{
+body{
+    background: #021e2a;
+}
+*{
     font-family: 'AR One Sans', sans-serif;
-} */
-/* ::-webkit-scrollbar{
-    width: 0;
-    height: 0;
-} */
-
+    color: #fff;
+}
+a{
+    text-decoration: none;
+}
+button{
+    background: #0f674c;
+    border: 1px solid #41fd8b;
+    border-radius: 6px;
+    padding: 7px 10px;
+}
+.global__table button{
+    color: #41fd8b;
+    cursor: pointer;
+}
+.global__table svg{
+    fill: #41fd8b;
+}
+.global__table a{
+    color: #41fd8b;
+}
+.MuiList-root{
+    background: #0f674c;
+}
+.MuiDataGrid-panelWrapper{
+    background: #0f674c;
+}
+.MuiDataGrid-panelWrapper button{
+    color: #fff;
+    padding: inherit;
+}
+.css-953pxc-MuiInputBase-root-MuiInput-root::before{
+    border-bottom: 1px solid #fff !important;
+}
+.css-953pxc-MuiInputBase-root-MuiInput-root::after{
+    border-bottom: 1px solid #41fd8b !important;
+}
+.MuiDataGrid-panelWrapper label{
+    color: #fff;
+}
+.MuiDataGrid-panelWrapper input{
+    color: #fff;
+}
+.MuiDataGrid-panelWrapper input::placeholder{
+    color: #fff;
+    opacity: 1;
+}
+.css-1c2i806-MuiFormLabel-root-MuiInputLabel-root.Mui-focused{
+    color: #41fd8b !important;
+}
+.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track{
+    background-color: #41fd8b !important;
+}
 .wrapp__app{
     display: flex;
     align-items: center;
 }
-
 .btn__theme{
     margin: 0 0 auto 0; 
 }

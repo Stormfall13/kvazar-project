@@ -1,5 +1,4 @@
 import "./App.css";
-import './index.css'
 import Main from "./components/main/Main";
 import AdWork from "./components/adwork/AdWork";
 import NewSite from "./components/newsite/NewSite";
@@ -50,9 +49,9 @@ const App = () => {
   }, [backgroundColor, textColor]); // Зависимость от состояния backgroundColor
 
   return (
-    <div className='App font-sans font-medium m-0 bg-green-500 relative'>
+    <div className='App'>
       <div className="wrapp__app">
-        <button className="text-lg bg-slate-50 pt-2 pb-2 pl-4 pr-4" onClick={changeBackground}>Темная тема</button>
+        <button onClick={changeBackground}>Темная тема</button>
         <MainNav/>
       </div>
         <NavMenu/>

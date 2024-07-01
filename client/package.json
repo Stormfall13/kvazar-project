@@ -22,7 +22,6 @@
     "date-fns": "^2.30.0",
     "format": "^0.2.2",
     "jwt-decode": "^4.0.0",
-    "postcss": "^8.4.38",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.3",
@@ -63,6 +62,8 @@
     "src"
   ],
   "devDependencies": {
+    "customize-cra": "^1.0.0",
+    "react-app-rewired": "^2.2.1",
     "tailwindcss": "^3.4.4"
   }
 }

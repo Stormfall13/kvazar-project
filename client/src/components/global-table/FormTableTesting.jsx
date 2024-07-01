@@ -133,7 +133,7 @@ const FormTableTesting = ({ currentId, rowsItem = {}, isVisible, onClose, fetchD
     }
 
     return (
-        <div className="max-w-[1800px] mx-auto my-0">
+        <div className="wrapp__formTable">
         <button onClick={getInfoToForm} className="bg-white p-3">Добавить данные с таблицы</button>
         <form className="table__testing" onSubmit={handleSubmit} style={{
             display: isVisible ? 'flex' : 'none',
@@ -299,7 +299,7 @@ const FormTableTesting = ({ currentId, rowsItem = {}, isVisible, onClose, fetchD
             </div>
             <button type="submit">Изменить</button>
         </form>
-        </div>
+    </div>
     );
 };
 

@@ -1,24 +1,24 @@
-.wrapp__menu {
+.wrapp__menu{
   display: flex;
   justify-content: flex-end;
 }
-
-nav {
+.main__menu{
   max-width: 1800px;
   width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-end; 
 }
-
-.main__l {
+.main__link{
   font-size: 20px;
   font-weight: 700;
-  color: #160B34;
+  color: #fff;
   text-align: center;
-  text-decoration: none;
-  border: 2px solid #160B34;
+  text-decoration: none; 
+  border: 2px solid #41fd8b;
+  background: #0f674c;
   border-radius: 5px;
   padding: 5px;
   margin: 5px;
-}/*# sourceMappingURL=menu.module.css.map */
+}

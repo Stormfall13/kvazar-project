@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
-import './globalTable.css'
+import './globalTable.css';
+import '../../App.css';
 import Box from '@mui/material/Box';
 import {
 	DataGrid,
@@ -36,9 +37,9 @@ const GlobalTable = () => {
 
 	const [ currentId , setCurrentId ] = useState('');
 	const [ rowsItem , setRowsItem ] = useState('');
-	const [isFormVisible, setIsFormVisible] = useState(false);
-	const [countingWindowVisible, setCountingWindowVisible] = useState(false);
-    const [countingWindowData, setCountingWindowData] = useState('');
+	const [ isFormVisible, setIsFormVisible ] = useState(false);
+	const [ countingWindowVisible, setCountingWindowVisible ] = useState(false);
+    const [ countingWindowData, setCountingWindowData ] = useState('');
 	const roles = useUserRoles();
 	
 	const formRef = useRef(null);
@@ -155,7 +156,7 @@ const GlobalTable = () => {
 			>
 				
 				<DataGrid
-				className=''
+				className='global__table'
 				rows={rows}
 				getRowId={(row) => row.uniqueId}
 				columns={columns}
