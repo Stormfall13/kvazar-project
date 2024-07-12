@@ -1,8 +1,7 @@
 import React from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import './globalTable.css'
-
+import './globalTable.css';
 
 const formatDateString = (value) => {
     const date = new Date(value);
@@ -12,8 +11,21 @@ const formatDateString = (value) => {
     return `${day}.${month}.${year}`;
 };
 
-
 export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromUniqueId, handleCountingClick) => [
+    {
+        field: 'edit',
+        headerName: 'Изменить',
+        width: 80,
+        cellClassName: 'actions',
+        renderCell: (params) => {
+            const row = getRowFromUniqueId(params.id);
+            return (
+                <button className='edit__icon' onClick={() => handleEditClick(row)}>
+                    <EditIcon />
+                </button>
+            );
+        },
+    },
     { 
         field: 'id', 
         headerName: 'ID', 
@@ -48,14 +60,13 @@ export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromU
                 </a>
             );
         },
-        
     },
     {
         field: 'inspector',
         headerName: 'Проверяющй',
         width: 180,
         editable: true,
-        type: 'text'
+        type: 'text',
     },
     {
         field: 'executor',
@@ -66,11 +77,10 @@ export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromU
     },
     {
         field: 'amount',
-        headerName: 'Кол-во доп  работ в рег-те',
+        headerName: 'Кол-во доп работ в рег-те',
         type: 'text',
         width: 180,
         editable: true,
-        
     },
     {
         field: 'typeWork',
@@ -178,7 +188,7 @@ export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromU
     },
     {
         field: 'departament',
-        headerName: 'Департамент',
+        headerName: 'Отдел',
         type: 'text',
         width: 180,
         editable: true,
@@ -215,20 +225,17 @@ export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromU
         valueFormatter: (params) => formatDateString(params.value),
     },
     {
-        field: 'actions',
-        type: 'actions',
-        headerName: 'Параметры',
+        field: 'delete',
+        headerName: 'Удалить',
         width: 100,
         cellClassName: 'actions',
-        getActions: ({ id: uniqueId }) => {
-            const row = getRowFromUniqueId(uniqueId);
-
-            return [
-                <>
-                <button className='edit__icon' onClick={() => handleEditClick(row)}><EditIcon /></button>
-                <button className='delete__icon' onClick={() => handleDeleteClick(row)}><DeleteIcon /></button>
-                </>
-            ];
+        renderCell: (params) => {
+            const row = getRowFromUniqueId(params.id);
+            return (
+                <button className='delete__icon' onClick={() => handleDeleteClick(row)}>
+                    <DeleteIcon />
+                </button>
+            );
         },
     },
 ];

@@ -46,6 +46,12 @@ const FormTableTesting = ({ currentId, rowsItem = {}, isVisible, onClose, fetchD
     }, [currentId]);
 
     useEffect(() => {
+        if(isVisible){
+            getInfoToForm()
+        }
+    }, [isVisible])
+
+    useEffect(() => {
         if (typeTest && typeWork && amount) {
             // КОЭФФИЦЕНТЫ
             const amountMultipliers = {
@@ -109,7 +115,6 @@ const FormTableTesting = ({ currentId, rowsItem = {}, isVisible, onClose, fetchD
         }
 
         console.log("Submitting data: ", item);
-
         try {
             const response = await fetch(`http://localhost:5000/api/dop-work/${id}`, { // замените URL на ваш реальный
                 method: 'PUT',
@@ -132,18 +137,19 @@ const FormTableTesting = ({ currentId, rowsItem = {}, isVisible, onClose, fetchD
         }
     }
 
+
     return (
         <div className="wrapp__formTable">
-        <button onClick={getInfoToForm} className="bg-white p-3">Добавить данные с таблицы</button>
         <form className="table__testing" onSubmit={handleSubmit} style={{
             display: isVisible ? 'flex' : 'none',
             opacity: isVisible ? 1 : 0,
             transition: 'opacity 0.3s ease'
+
         }}>
             <div className="input__wrapp">
                 <span>ID</span>
                 <input
-                    className="id__input bg-white"
+                    className="id__input"
                     type="text"
                     placeholder="ID"
                     disabled

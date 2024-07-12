@@ -289,6 +289,7 @@ const AdWork = () => {
             .catch((error) => {
                 console.error(error);
             });
+            window.location.reload()
     };
 
     function clearExecutor() {
@@ -297,9 +298,14 @@ const AdWork = () => {
         btnClear.style.display = '';
     }
 
+    function clearForm() {
+        window.location.reload()
+    }
+
     return (
         <div className="ad__container">
             <h1>Доп. Работы</h1>
+            <button className='clear__form' onClick={clearForm}>Очистить форму</button>
             <form onSubmit={handleSubmit} className="form__global">
                 <div className="point__work">
                     <span className='options__work'>Ссылка на регламент</span>

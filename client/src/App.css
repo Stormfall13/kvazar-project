@@ -15,6 +15,7 @@ button{
     border: 1px solid #41fd8b;
     border-radius: 6px;
     padding: 7px 10px;
+    cursor: pointer;
 }
 .global__table button{
     color: #41fd8b;

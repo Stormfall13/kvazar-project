@@ -32,7 +32,6 @@
   flex-direction: column;
   justify-content: flex-start;
 }
-
 .counting__window{
   position: absolute;
   top: 0;
@@ -40,11 +39,11 @@
   left: 0;
   height: 100vh;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column-reverse;
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
 }
 
@@ -72,7 +71,6 @@
   background: transparent;
   border: 0;
 }
-
 .wrapp__formTable{
   max-width: 1800px;
   margin: 0 auto;

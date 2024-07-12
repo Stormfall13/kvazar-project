@@ -15,6 +15,7 @@ import FormTableTesting from './FormTableTesting';
 import { getColumnsConfig } from './columnsConfig';
 import CountingWindow from './CountingWindow';
 import useUserRoles from '../../auth/useUserRoles';
+import ConfirmModal from './ConfirmModal';
 
 function CustomToolbar() {
 	return (
@@ -32,24 +33,49 @@ const myLocaleText = {
 	toolbarExportCSV: 'Скачать в формате CSV',
 };
 
-
 const GlobalTable = () => {
 
-	const [ currentId , setCurrentId ] = useState('');
-	const [ rowsItem , setRowsItem ] = useState('');
-	const [ isFormVisible, setIsFormVisible ] = useState(false);
-	const [ countingWindowVisible, setCountingWindowVisible ] = useState(false);
+	const [ currentId , setCurrentId ] = useState(''); // id строки
+	const [ rowsItem , setRowsItem ] = useState('');  // строка при клике на редактирование
+	const [ isFormVisible, setIsFormVisible ] = useState(false); // переменная открытия формы редактирования
+	const [ countingWindowVisible, setCountingWindowVisible ] = useState(false); 
     const [ countingWindowData, setCountingWindowData ] = useState('');
-	const roles = useUserRoles();
+	const [isModalVisible, setIsModalVisible] = useState(false); // открытие окна для подтверждения удаления
+	const [rowToBeDeleted, setRowToBeDeleted] = useState(null); // строка которая передается в окно удаления строки т.е. id туда передает
+	const formRef = useRef(null); // при клике на редактирования прокручивает страницу до формы
+
+	const [rows, setRows] = React.useState([]);
+	const [rowModesModel, setRowModesModel] = React.useState({});
+	const sortRowsByCreatedAt = (rowArray) => {
+		return [...rowArray].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+	};
+
+	const processRowUpdate = (newRow) => {
+		// console.log('Updated Row:', newRow);
+		const updatedRow = { ...newRow };
+		// console.log(updatedRow);
+		setRows(currentRows => {
+			return currentRows.map(row => row.id === newRow.id ? updatedRow : row);
+		});
 	
-	const formRef = useRef(null);
+		return updatedRow;
+		};
+	
+		const getRowFromUniqueId = (uniqueId) => {
+			return rows.find(row => row.uniqueId === uniqueId);
+		}
+
+	const roles = useUserRoles();
+
+	const userHasRole = (role) => {
+		return roles.includes(role);
+	};
 
 	const handleEditClick = (row) => {
 		// console.log(row);
 		setCurrentId(row.id);
 		setRowsItem(row);
 		setIsFormVisible(true);
-
 		setTimeout(() => {
             if (formRef.current) {
                 formRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -57,23 +83,24 @@ const GlobalTable = () => {
         }, 0);
 		
 	};
-
-
 	const handleCountingClick = (data) => {
         setCountingWindowData(data);
         setCountingWindowVisible(true);
     };
-
     const handleCloseCountingWindow = () => {
         setCountingWindowVisible(false);
         setCountingWindowData('');
     };
 
-	const [rows, setRows] = React.useState([]);
-	const [rowModesModel, setRowModesModel] = React.useState({});
-	const sortRowsByCreatedAt = (rowArray) => {
-		return [...rowArray].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-	};
+	const handleDeleteClick = (row) => {
+        setRowToBeDeleted(row);
+        setIsModalVisible(true);
+    };
+
+	const cancelDelete = () => {
+        setIsModalVisible(false);
+        setRowToBeDeleted(null);
+    };
 	
 	const fetchData = async () => {
 		try {
@@ -95,49 +122,54 @@ const GlobalTable = () => {
 		fetchData();
 	}, []);
 
-	const handleDeleteClick = async (row) => {
-		// console.log(row.id);
-		try {
-            const response = await fetch(`http://localhost:5000/api/dop-work/${row.id}`, {
-                method: 'DELETE',
-                headers: {
-                    Accept: 'application/json',
-                },
-            });
+	// const handleDeleteClick = async (row) => {
+	// 	console.log(row.id);
+	// 	try {
+	// 		const response = await fetch(`http://localhost:5000/api/dop-work/${row.id}`, {
+	// 			method: 'DELETE',
+	// 			headers: {
+	// 				Accept: 'application/json',
+	// 		},
+	// 	});
 
-            if (response.ok) {
-                // Удалить строку из состояния
-                setRows(rows.filter((r) => r.id !== row.id));
-                console.log(`Row with ID: ${row.id} has been deleted.`);
-            } else {
-                console.error(`Failed to delete row with ID: ${row.id}`);
+    //         if (response.ok) {
+    //             // Удалить строку из состояния
+    //             setRows(rows.filter((r) => r.id !== row.id));
+    //             console.log(`Row with ID: ${row.id} has been deleted.`);
+    //         } else {
+    //             console.error(`Failed to delete row with ID: ${row.id}`);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error while deleting row:', error);
+    //     }
+	// }
+	const confirmDelete = async (row) => {
+		console.log(row.id);
+		if (rowToBeDeleted) {
+            try {
+                const response = await fetch(`http://localhost:5000/api/dop-work/${rowToBeDeleted.id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    setRows(rows.filter((r) => r.id !== rowToBeDeleted.id));
+                    console.log(`Row with ID: ${rowToBeDeleted.id} has been deleted.`);
+                } else {
+                    console.error(`Failed to delete row with ID: ${rowToBeDeleted.id}`);
+                }
+            } catch (error) {
+                console.error('Error while deleting row:', error);
+            } finally {
+                setIsModalVisible(false);
+                setRowToBeDeleted(null);
             }
-        } catch (error) {
-            console.error('Error while deleting row:', error);
-        }
+        }	
 	}
 
-	const processRowUpdate = (newRow) => {
-    // console.log('Updated Row:', newRow);
-    const updatedRow = { ...newRow };
-    // console.log(updatedRow);
-    setRows(currentRows => {
-		return currentRows.map(row => row.id === newRow.id ? updatedRow : row);
-    });
-
-    return updatedRow;
-	};
-
-	const getRowFromUniqueId = (uniqueId) => {
-		return rows.find(row => row.uniqueId === uniqueId);
-	}
-
-	
 	const columns = getColumnsConfig(handleEditClick, handleDeleteClick, getRowFromUniqueId, handleCountingClick);
-	
-	const userHasRole = (role) => {
-		return roles.includes(role);
-	};
 	
 	return (
 		<>
@@ -176,6 +208,7 @@ const GlobalTable = () => {
 				<FormTableTesting currentId={currentId} rowsItem={rowsItem} fetchData={fetchData} isVisible={isFormVisible}  onClose={() => setIsFormVisible(false)}  />
 			</div>
 			<ReportQA/>
+			<ConfirmModal show={isModalVisible} onClose={cancelDelete} onConfirm={confirmDelete} />
 			{countingWindowVisible && <CountingWindow data={countingWindowData} onClose={handleCloseCountingWindow} />}
 		</>
 	);
