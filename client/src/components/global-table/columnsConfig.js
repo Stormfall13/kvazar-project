@@ -159,13 +159,6 @@ export const getColumnsConfig = (handleEditClick, handleDeleteClick, getRowFromU
         editable: true,
     },
     {
-        field: 'deadlines',
-        headerName: 'Сроки',
-        type: 'text',
-        width: 100,
-        editable: true,
-    },
-    {
         field: 'delayTester',
         headerName: 'Просрочка тестировщика',
         type: 'text',

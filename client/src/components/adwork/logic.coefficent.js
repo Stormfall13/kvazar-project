@@ -1,6 +1,15 @@
 
 
-
+var datessheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("contol_dates");
+var counter_last = datessheet.getLastRow(); 
+for (var cycle = 2; cycle <= counter_last; cycle = cycle + 1){
+    var current_date = spreadsheet.getRange(current,1,1,1);
+    var check_date = datessheet.getRange(cycle,2,1,1); 
+    if ((current_date.getValue() < check_date.getValue())){
+    spreadsheet.getRange(current,41,1,1).setValue(datessheet.getRange(cycle,1,1,1).getValue());
+    break;
+    }
+}
 
 // ЛОГИКА ДО ОПТИМИЗАЦИИ НА ПЕРВУЮ ПРОВЕРКУ
 // useEffect(() => {

@@ -20,6 +20,9 @@ const FormTableTesting = ({ currentId, rowsItem = {}, isVisible, onClose, fetchD
     const [delayTester, setDelayTester] = useState(''); // Просрочка тестировщика
     const [delayExecutor, setDelayExecutor] = useState(''); // Просрочка исполнителя
     const [commentError, setCommentError] = useState(''); // Комментарий ошибки
+    const [reportPeriods, setReportPeriodst] = useState(''); // Дата отчета
+    const [dispute, setDispute] = useState(''); // Спор
+    const [pointsRemove, setPointsRemove] = useState(''); // Снятые баллы
 
     const getInfoToForm = () => {
             setId(currentId);
@@ -39,6 +42,9 @@ const FormTableTesting = ({ currentId, rowsItem = {}, isVisible, onClose, fetchD
             setDelayTester(rowsItem.delayTester || '');
             setDelayExecutor(rowsItem.delayExecutor || '');
             setCommentError(rowsItem.commentError || '');
+            setReportPeriodst(rowsItem.reportPeriods || '');
+            setDispute(rowsItem.dispute || '');
+            setPointsRemove(rowsItem.pointsRemove || '');
     }
 
     useEffect(() => {
@@ -276,16 +282,27 @@ const FormTableTesting = ({ currentId, rowsItem = {}, isVisible, onClose, fetchD
                 <input
                     type="text"
                     value={delayTester}
+                    list="ПросрочкаТестировщика"
                     onChange={(e) => setDelayTester(e.target.value)}
                 />
+                <datalist id='ПросрочкаТестировщика'>
+                    <option value="Внутренняя"></option>
+                    <option value="Внешняя"></option>
+                </datalist>
             </div>
             <div className="input__wrapp">
                 <span>Просрочка исполнителя</span>
                 <input
                     type="text"
                     value={delayExecutor}
+                    list='ПросрочкаИсполнителя'
                     onChange={(e) => setDelayExecutor(e.target.value)}
                 />
+                <datalist id='ПросрочкаИсполнителя'>
+                    <option value="Внутренняя"></option>
+                    <option value="Внешняя"></option>
+                    <option value="Ответственный"></option>
+                </datalist>
             </div>
             <div className="input__wrapp">
                 <span>Комментарий ошибки</span>
@@ -293,6 +310,30 @@ const FormTableTesting = ({ currentId, rowsItem = {}, isVisible, onClose, fetchD
                     type="text"
                     value={commentError}
                     onChange={(e) => setCommentError(e.target.value)}
+                />
+            </div>
+            <div className="input__wrapp">
+                <span>Дата отчета</span>
+                <input
+                    type="text"
+                    value={reportPeriods}
+                    onChange={(e) => setReportPeriodst(e.target.value)}
+                />
+            </div>
+            <div className="input__wrapp">
+                <span>Спор</span>
+                <input
+                    type="text"
+                    value={dispute}
+                    onChange={(e) => setDispute(e.target.value)}
+                />
+            </div>
+            <div className="input__wrapp">
+                <span>Снятые баллы</span>
+                <input
+                    type="text"
+                    value={pointsRemove}
+                    onChange={(e) => setPointsRemove(e.target.value)}
                 />
             </div>
             <div className="input__wrapp textarea__wrapp">

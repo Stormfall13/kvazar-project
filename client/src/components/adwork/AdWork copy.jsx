@@ -47,7 +47,7 @@ const AdWork = () => {
     const [commentError, setCommentError] = useState(localStorage.getItem('commentError') || '');
     const [linkReport, setLinkReport] = useState(localStorage.getItem('linkReport') || '');
     const [uniqueId, setUniqueId] = useState('');
-    const [reportPeriods, setReportPeriods] = useState('');
+    const [reportPeriods, setReportPeriods] = useState([]);
 
     useEffect(() => {
         try {
@@ -57,93 +57,86 @@ const AdWork = () => {
         }
     }, [user]);
 
- 
     useEffect(() => {
         const dataPeriods = [
             {
-                "id": "1",
-                "startDate": "01.01.2024",
-                "endDate": "28.01.2024"
+                "id": "january",
+                "startDate": "2024-01-01",
+                "endDate": "2024-01-28"
             },
             {
-                "id": "2",
-                "startDate": "29.01.2024",
-                "endDate": "27.02.2024"
+                "id": "february",
+                "startDate": "2024-01-29",
+                "endDate": "2024-02-27"
             },
             {
-                "id": "3",
-                "startDate": "28.02.2024",
-                "endDate": "27.03.2024"
+                "id": "march",
+                "startDate": "2024-02-28",
+                "endDate": "2024-03-27"
             },
             {
-                "id": "4",
-                "startDate": "28.03.2024",
-                "endDate": "25.04.2024",
+                "id": "april",
+                "startDate": "2024-03-28",
+                "endDate": "2024-04-25",
             },
             {
-                "id": "5",
-                "startDate": "26.04.2024",
-                "endDate": "29.05.2024",
+                "id": "may",
+                "startDate": "2024-04-26",
+                "endDate": "2024-05-29",
             },
             {
-                "id": "6",
-                "startDate": "30.05.2024",
-                "endDate": "26.06.2024",
+                "id": "june",
+                "startDate": "2024-05-30",
+                "endDate": "2024-06-26",
             },
             {
-                "id": "7",
-                "startDate": "27.06.2024",
-                "endDate": "28.07.2024",
+                "id": "july",
+                "startDate": "2024-06-27",
+                "endDate": "2024-07-28",
             },
             {
-                "id": "8",
-                "startDate": "29.07.2024",
-                "endDate": "28.08.2024",
+                "id": "august",
+                "startDate": "2024-07-29",
+                "endDate": "2024-08-28",
             },
             {
-                "id": "9",
-                "startDate": "29.08.2024",
-                "endDate": "25.09.2024",
+                "id": "september",
+                "startDate": "2024-08-29",
+                "endDate": "2024-09-25",
             },
             {
-                "id": "10",
-                "startDate": "26.09.2024",
-                "endDate": "28.10.2024",
+                "id": "october",
+                "startDate": "2024-09-26",
+                "endDate": "2024-10-28",
             },
             {
-                "id": "11",
-                "startDate": "29.10.2024",
-                "endDate": "26.11.2024",
+                "id": "november",
+                "startDate": "2024-10-29",
+                "endDate": "2024-11-26",
             },
             {
-                "id": "12",
+                "id": "december",
                 "startDate": "2024-11-27",
                 "endDate": "2024-12-26",
-            }
+            },
         ];
-        
-        const now = new Date();
-        
-        const currentDay = String(now.getDate()).padStart(2, '0');
-        const currentMonth = String(now.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
-        const currentYear = now.getFullYear();
-        
-        const formattedToday = `${currentDay}.${currentMonth}.${currentYear}`;
-        
-        // console.log(formattedToday);
-        
-        // console.log(dataPeriods[0]['startDate'], dataPeriods[0]['endDate']);
-        
-        if(dataPeriods[0]['startDate'] >= formattedToday && formattedToday <= dataPeriods[0]['endDate']){
-            // console.log('+');
-            // console.log('01.'+`${dataPeriods[0]['startDate'].split('.')[1]}.`+`${currentYear}`);
-            setReportPeriods('01.'+`${dataPeriods[0]['startDate'].split('.')[1]}.`+`${currentYear}`)
-        } else {
-            console.log('-');
-        } 
-        
+
+        setReportPeriods(dataPeriods);
     }, []);
 
+    const getFormattedPeriodStart = (date) => {
+        const period = reportPeriods.find(period =>
+            new Date(date) >= new Date(period.startDate) &&
+            new Date(date) <= new Date(period.endDate)
+        );
+        if (period) {
+            const startDate = new Date(period.startDate);
+            // Устанавливаем первый день месяца
+            startDate.setDate(1);
+            return startDate.toISOString().split('T')[0]; // Преобразуем дату в строку формата YYYY-MM-DD
+        }
+        return '';
+    };
 
     useEffect(() => {
         const randomKey = uuidv4();
@@ -298,6 +291,8 @@ const AdWork = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const formattedPeriodStart = getFormattedPeriodStart(new Date());
+
         const item = {
             "reglament": reglament,
             "executor": executor,
@@ -317,7 +312,7 @@ const AdWork = () => {
             "commentError": commentError,
             "linkReport": linkReport,
             "uniqueId": uniqueId,
-            "reportPeriods": reportPeriods,
+            "reportPeriods": formattedPeriodStart,
         };
 
         fetch('http://localhost:5000/api/dop-work', {
@@ -351,7 +346,6 @@ const AdWork = () => {
             localStorage.removeItem('delayExecutor');
             localStorage.removeItem('commentError');
             localStorage.removeItem('linkReport');
-            localStorage.removeItem('reportPeriods');
 
             window.location.reload()
     };
@@ -381,7 +375,6 @@ const AdWork = () => {
         localStorage.removeItem('delayExecutor');
         localStorage.removeItem('commentError');
         localStorage.removeItem('linkReport');
-        localStorage.removeItem('reportPeriods');
 
         window.location.reload()
     }

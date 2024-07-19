@@ -122,27 +122,6 @@ const GlobalTable = () => {
 		fetchData();
 	}, []);
 
-	// const handleDeleteClick = async (row) => {
-	// 	console.log(row.id);
-	// 	try {
-	// 		const response = await fetch(`http://localhost:5000/api/dop-work/${row.id}`, {
-	// 			method: 'DELETE',
-	// 			headers: {
-	// 				Accept: 'application/json',
-	// 		},
-	// 	});
-
-    //         if (response.ok) {
-    //             // Удалить строку из состояния
-    //             setRows(rows.filter((r) => r.id !== row.id));
-    //             console.log(`Row with ID: ${row.id} has been deleted.`);
-    //         } else {
-    //             console.error(`Failed to delete row with ID: ${row.id}`);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error while deleting row:', error);
-    //     }
-	// }
 	const confirmDelete = async (row) => {
 		console.log(row.id);
 		if (rowToBeDeleted) {

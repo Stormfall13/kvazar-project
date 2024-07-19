@@ -26,7 +26,7 @@ const Dop = sequelize.define('dop_work_table', {
     commentError: {type: DataTypes.STRING},                         // Комментарий ошибки
     linkReport: {type: DataTypes.STRING},                           // ссылка для отчета
     uniqueId: {type: DataTypes.STRING},                             // Уникальный ID uuid
-    reportPeriods: {type: DataTypes.DATEONLY},
+    reportPeriods: {type: DataTypes.DATEONLY},                        // Дата отчета
 })
 
 const Executor = sequelize.define('executor_table', {

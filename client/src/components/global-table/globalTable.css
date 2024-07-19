@@ -12,8 +12,8 @@
   align-items: center !important;
   flex-wrap: wrap !important;
   justify-content: flex-start;
-  max-width: 1800px;
-  margin: 0 auto;
+  max-width: 1765px;
+  margin: 0 auto 0 0;
 }
 .table__testing textarea{
   min-height: 260px;
