@@ -46,11 +46,6 @@ input{
     border: 1px solid #bbb6b6;
     max-width: 285px; 
 }
-input::placeholder{
-    color: #160B34;
-    font-family: 'AR One Sans', sans-serif; 
-    font-size: 18px;
-}
 textarea{
     border: 0;
     outline: none;

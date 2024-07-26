@@ -62,7 +62,7 @@ const AdWork = () => {
         const dataPeriods = [
             {
                 "id": "1",
-                "startDate": "01.01.2024",
+                "startDate": "29.12.2023",
                 "endDate": "28.01.2024"
             },
             {
@@ -93,54 +93,56 @@ const AdWork = () => {
             {
                 "id": "7",
                 "startDate": "27.06.2024",
-                "endDate": "28.07.2024",
+                "endDate": "29.07.2024",
             },
             {
                 "id": "8",
-                "startDate": "29.07.2024",
+                "startDate": "30.07.2024",
                 "endDate": "28.08.2024",
             },
             {
                 "id": "9",
                 "startDate": "29.08.2024",
-                "endDate": "25.09.2024",
+                "endDate": "26.09.2024",
             },
             {
                 "id": "10",
-                "startDate": "26.09.2024",
-                "endDate": "28.10.2024",
+                "startDate": "27.09.2024",
+                "endDate": "29.10.2024",
             },
             {
                 "id": "11",
-                "startDate": "29.10.2024",
-                "endDate": "26.11.2024",
+                "startDate": "30.10.2024",
+                "endDate": "27.11.2024",
             },
             {
                 "id": "12",
-                "startDate": "2024-11-27",
-                "endDate": "2024-12-26",
+                "startDate": "28.11.2024",
+                "endDate": "29.12.2024",
             }
         ];
-        
+
         const now = new Date();
-        
+    
         const currentDay = String(now.getDate()).padStart(2, '0');
         const currentMonth = String(now.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
         const currentYear = now.getFullYear();
         
         const formattedToday = `${currentDay}.${currentMonth}.${currentYear}`;
         
-        // console.log(formattedToday);
-        
-        // console.log(dataPeriods[0]['startDate'], dataPeriods[0]['endDate']);
-        
-        if(dataPeriods[0]['startDate'] >= formattedToday && formattedToday <= dataPeriods[0]['endDate']){
-            // console.log('+');
-            // console.log('01.'+`${dataPeriods[0]['startDate'].split('.')[1]}.`+`${currentYear}`);
-            setReportPeriods('01.'+`${dataPeriods[0]['startDate'].split('.')[1]}.`+`${currentYear}`)
-        } else {
-            console.log('-');
-        } 
+        dataPeriods.forEach(period => {
+            const [startDay, startMonth, startYear] = period.startDate.split('.');
+            const startDate = new Date(`${startYear}-${startMonth}-${startDay}`);
+            
+            const [endDay, endMonth, endYear] = period.endDate.split('.');
+            const endDate = new Date(`${endYear}-${endMonth}-${endDay}`);
+    
+            const today = new Date(`${currentYear}-${currentMonth}-${currentDay}`);
+            
+            if (today >= startDate && today <= endDate) {
+                setReportPeriods(`${currentYear}-${endMonth}-01`);
+            }
+        });
         
     }, []);
 
@@ -460,7 +462,7 @@ const AdWork = () => {
                 </div>
                 <div className="counting__wrapp">
                     <span className="options__work">Отчет<span className='red__star'>*</span></span>
-                    <textarea className='counting' required type="text" value={counting} onChange={(e) => setCounting(e.target.value)} placeholder="Мой ответ" />
+                    <textarea className='counting' required type="text" value={counting} onChange={(e) => setCounting(e.target.value)} />
                 </div>
                 <div className="point__work">
                     <span className="options__work">Просрочка исполнителя</span>
