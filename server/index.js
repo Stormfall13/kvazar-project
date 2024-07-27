@@ -7,7 +7,7 @@ const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const router = require('./routes/index')
 const { google } = require('googleapis');
 const { Pool } = require('pg');
-// const keysGoogle = require('./keys.json');
+// тут создать переменную KeysGoogle с импортом через require json файл с ключами
 
 const PORT = process.env.PORT || 5000
 
