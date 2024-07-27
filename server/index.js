@@ -45,7 +45,7 @@ app.use(errorHandler)
 //     const values = result.rows.map(row => Object.values(row));
     
 //     // ID таблицы Google Sheets и диапазон для записи данных
-//     const spreadsheetId = '1AXhCjZncoVxh1CpLSPMrGoNJv-90ztDO0Sb-l1GS5EY'; // Замените на ваш ID Google Sheets
+//     const spreadsheetId = 'Ключ ID'; // Замените на ваш ID Google Sheets
 //     const range = 'Лист1!A1'; // Замените на нужный диапазон
 
 //     // Запись данных в Google Sheets
