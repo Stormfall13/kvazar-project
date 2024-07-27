@@ -7,7 +7,7 @@ const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const router = require('./routes/index')
 const { google } = require('googleapis');
 const { Pool } = require('pg');
-const keysGoogle = require('./keys.json');
+// const keysGoogle = require('./keys.json');
 
 const PORT = process.env.PORT || 5000
 
